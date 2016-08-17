@@ -1,0 +1,179 @@
+#pragma once
+#include "../Biblioteca/DiskIO.h"
+#include <string>
+#include <algorithm>
+#include "../Biblioteca/Utiles.h"
+#include "../Biblioteca/poisson.h"
+#include "../Biblioteca/grafo.h"
+#include "../Biblioteca/aleatorio.h"
+#include "../Biblioteca/Reloj.h"
+#include "../Biblioteca/definiciones.h"
+#include "Persona.h"
+
+using namespace std;
+
+struct REGISTRO_CONTABLE_TYPE
+{
+	vector<unsigned int> contagios_por_edad_16_18;
+	vector<unsigned int> contagios_por_edad_16_18_H;
+	vector<unsigned int> contagios_por_edad_16_18_M;
+	vector<unsigned int> contagios_por_edad_6_11;
+	vector<unsigned int> contagios_por_edad_6_11_H;
+	vector<unsigned int> contagios_por_edad_6_11_M;
+	vector<unsigned int> contagios_por_edad_16_18_6_11;
+	vector<unsigned int> contagios_por_edad_16_18_6_11_H;
+	vector<unsigned int> contagios_por_edad_16_18_6_11_M;
+	vector<unsigned int> contagios_por_edad_ANY;
+	vector<unsigned int> contagios_por_edad_ANY_H;
+	vector<unsigned int> contagios_por_edad_ANY_M;
+	vector<unsigned int> vacunadas;
+	vector<unsigned int> recuperados_por_edad_16_18;
+	vector<unsigned int> recuperados_por_edad_6_11;
+	vector<unsigned int> poblacion_por_edad;
+	vector<unsigned int> poblacion_por_edad_H;
+	vector<unsigned int> poblacion_por_edad_M;
+
+
+
+};
+
+struct subNodoWeight {
+    unsigned int weight;
+    unsigned int pos;
+    bool usado;
+    subNodoWeight()
+    {
+        weight  =   0;
+        pos     =   0;
+        usado   =   0;
+    }
+};
+
+struct subNodoLSP {
+    unsigned int LSP;
+    unsigned int pos;
+    subNodoLSP()
+    {
+        LSP     =   0;
+        pos     =   0;
+    }
+};
+
+enum EVENTO_CONTABLE
+{
+	C_INFECTADO_16_18,
+	C_INFECTADO_16_18_H,
+	C_INFECTADO_16_18_M,
+	C_INFECTADO_6_11,
+	C_INFECTADO_6_11_H,
+	C_INFECTADO_6_11_M,
+	C_INFECTADO_16_18_6_11,
+	C_INFECTADO_16_18_6_11_H,
+	C_INFECTADO_16_18_6_11_M,
+	C_RECUPERADO_16_18,
+	C_RECUPERADO_6_11,
+	C_INFECTADO_ANY,
+	C_INFECTADO_ANY_H,
+	C_INFECTADO_ANY_M,
+	C_VACUNADA,
+	C_TOTALINDIVIDUOS,
+	C_TOTALINDIVIDUOS_H,
+	C_TOTALINDIVIDUOS_M,
+};
+
+class CProblema
+{
+public:
+
+    string       m_identificador_de_prueba;
+    unsigned int m_consumo_RAM;
+    BASE_TYPE    m_generador_de_red;
+    unsigned int m_turnos_a_simular;
+    unsigned int m_realizaciones;
+    unsigned int m_numero_de_nodos;
+    BASE_TYPE    m_grado_medio; //M
+    unsigned int m_T_desplazado;
+    BASE_TYPE    m_T0; //T1 Es el parametro desconocido
+    BASE_TYPE    m_T1; //T1 Es el parametro desconocido
+    BASE_TYPE    m_T2; //T2 Es el parametro desconocido
+    BASE_TYPE    m_T3; //T3 Es el parametro desconocido
+    BASE_TYPE    m_14_17__HR;
+    BASE_TYPE    m_14_17__LR;
+    BASE_TYPE    m_14_17__AMBOS;
+    BASE_TYPE    m_18_29__HR;
+    BASE_TYPE    m_18_29__LR;
+    BASE_TYPE    m_18_29__AMBOS;
+    BASE_TYPE    m_30_39__HR;
+    BASE_TYPE    m_30_39__LR;
+    BASE_TYPE    m_30_39__AMBOS;
+    BASE_TYPE    m_40_65__HR;
+    BASE_TYPE    m_40_65__LR;
+    BASE_TYPE    m_40_65__AMBOS;
+    BASE_TYPE m_meanDuration_16_18;
+    BASE_TYPE m_meanDuration_6_11;
+    BASE_TYPE m_probabilidad_de_contagio_M_6_11;
+    BASE_TYPE m_probabilidad_de_contagio_H_6_11;
+    BASE_TYPE m_probabilidad_de_contagio_M_16_18;
+    BASE_TYPE m_probabilidad_de_contagio_H_16_18;
+    //Vacunas
+    unsigned int m_mes_vacunacion;
+    BASE_TYPE m_pv;
+    BASE_TYPE m_cv;
+    BASE_TYPE m_pp;
+    BASE_TYPE m_tp;
+    bool m_dinamica;
+
+    //Variables globales
+    string       m_solucion_de_salida;
+    string       m_problema_de_entrada;
+    string       m_traza; //Traza global
+    unsigned int m_realizacion_actual;
+    unsigned int m_tot_hombres; //se calcula en ejecucion por la aleatoriedad de la red
+    unsigned int m_tot_homo; //se calcula en ejecucion por la aleatoriedad de la red
+    unsigned int m_pesos; //P se genera aleatorio, se llama alpha por el codigo
+    CReloj       m_reloj;
+    unsigned int m_tiempo_CPU;
+    CDadoTAUS88  m_dado;
+
+    CGrafo <CPersona> m_grafo;
+
+    CProblema();
+
+    ~CProblema(void);
+
+    //Methods
+    bool LeeProblema(string problema_de_entrada,string solucion_de_salida);
+    unsigned int GeneraRed(int p_num_nodos);
+    void IniciaContabilidad();
+    void SimulaPoblacion();
+    bool GuardaSimulacion(bool valida = false);
+    bool GuardaEstadoInicialRedParaGrafoWeb(bool valida = false);
+    bool GuardaRed(string archivo);
+    bool LeeRed(string archivo);
+    void Soluciona(string entrada, string salida);
+    unsigned int CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int edad);
+	BASE_TYPE calcula_T_Asociado(CPersona &sujeto_actual);
+	BASE_TYPE asigna_T(unsigned int edad);
+	BASE_TYPE PerdidaProteccion(unsigned int t);
+    vector <REGISTRO_CONTABLE_TYPE> m_contabilidad;
+	bool EsHombre();
+	int GrupoEdadHombres();
+	int GrupoEdadMujeres();
+	int EdadHombres();
+	int EdadMujeres();
+	int ParejasHombres(int edad);
+	int ParejasMujeres(int edad);
+	int ParejasHombresHomosexuales(int edad);
+	int PesoParejas(int parejas1, int parejas);
+	int PesoHomos(unsigned int edad1, unsigned int edad2);
+	bool PesoRed(int contTotalParejas);
+	bool TrazaPesos();
+	BASE_TYPE PesoEdades(int edadH, int edadM);
+    bool seRecupera_16_18(int tiempo_estado_salud);
+    bool seRecupera_6_11(int tiempo_estado_salud);
+    bool asignaMujer2Homo(unsigned int p_tot_hombres, unsigned int p_tot_mujeres, unsigned int id_nodo_homo);
+};
+
+
+	extern bool operator < (CPersona p1, CPersona p2);
+
