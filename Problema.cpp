@@ -5,6 +5,22 @@
 #define HABITANTES_OBJETIVO       10000.0
 #define BASE_HABITANTES           9874.2798798000058//9874.27987980001
 
+
+double elapsedTime_2 = 0;
+
+
+#define TIME_THIS(X)                                        \
+  {                                                         \
+    LARGE_INTEGER frequency_2;                              \
+    LARGE_INTEGER t1_2, t2_2;                               \
+    QueryPerformanceFrequency(&frequency_2);                \
+    QueryPerformanceCounter( &t1_2 );                       \
+    X;                                                      \
+    QueryPerformanceCounter( &t2_2 );                       \
+    printf( #X " demora: %f\n",                             \
+      (float) (t2_2.QuadPart - t1_2.QuadPart) * 1000.0 / frequency_2.QuadPart );                \
+  }
+
 //# Probabilidad acumulada de ser hombre (primero) o mujer (segundo) en la CV
 //
 bool CProblema::EsHombre() //devuelve true si por azar es hombre, false si es mujer
@@ -2011,10 +2027,10 @@ bool CProblema::GuardaEstadoInicialRedParaGrafoWeb(bool valida)
         }
         hombresSinPareja += entero_a_texto(mojigatos) + ";\n";
         mujeresSinPareja += entero_a_texto(mojigatas) + ";\n";
-        edadesH.erase(edadesH.size() - 1);//apaño el final del string
-        edadesM.erase(edadesM.size() - 1);//apaño el final del string
-        parHomAntes.erase(parHomAntes.size() - 1);//apaño el final del string
-        parMujAntes.erase(parMujAntes.size() - 1);//apaño el final del string
+        edadesH.erase(edadesH.size() - 1);//apanio el final del string
+        edadesM.erase(edadesM.size() - 1);//apanio el final del string
+        parHomAntes.erase(parHomAntes.size() - 1);//apanio el final del string
+        parMujAntes.erase(parMujAntes.size() - 1);//apanio el final del string
         edadesH += "};\n";
         edadesM += "};\n";
         parHomAntes += "};\n";
@@ -2032,7 +2048,7 @@ bool CProblema::GuardaEstadoInicialRedParaGrafoWeb(bool valida)
         //Pintar traza homo a continuacion
         matching += m_traza;
 
-        matching.erase(matching.size() - 1);//apaño el final del string la coma de "},"
+        matching.erase(matching.size() - 1);//apanio el final del string la coma de "},"
         matching += "}; ";
         cadena += matching;
 
@@ -2206,34 +2222,17 @@ bool CProblema::seRecupera_6_11(int p_tiempo_estado_salud)
 //Asignar una mujer de mas de cuatro parejas a cada homo
 bool CProblema::asignaMujer2Homo(unsigned int p_tot_hombres, unsigned int p_tot_mujeres, unsigned int id_nodo_homo)
 {
-    std::vector<subNodoLSP> subNodosMujeres;
-    subNodoLSP * tuplaM = new subNodoLSP[p_tot_mujeres];
-    int cntMSubnodo = 0;
-    subNodosMujeres.clear();
-    subNodosMujeres.reserve(p_tot_mujeres);
-    //Empezamos en la primera mujer hasta el final (i = p_tot_hombres)
-    for (unsigned int i = p_tot_hombres; i < m_grafo.m_numnodos; i++)
+    bool salir = false;
+    int dado = 0;
+    while (not salir)
     {
-        //Si es mujer y tiene relaciones (LSP > 0)
-        if ((m_grafo.Nodo(i).m_sexo == MUJER) && (m_grafo.Nodo(i).m_LSP > 4))
+        dado = m_dado.TiraRangoInt(p_tot_hombres, m_grafo.m_numnodos - 1);
+        if (m_grafo.Nodo(dado).m_LSP > 4)
         {
-            tuplaM[cntMSubnodo].pos = i;
-            //Esto deberia cambiarse puesto que se almacena en peso el numero de relaciones
-            //es una praxis oportunista y no de buen programador
-            //No necesito saber el LSP de la mujer porque ya se que es > 4
-            //tuplaM[cntMSubnodo].weight = m_grafo.Nodo(i).m_relaciones_pendientes;
-            subNodosMujeres.push_back(tuplaM[cntMSubnodo]);
-            cntMSubnodo++;
+            salir = true;
+            m_grafo.GuardaAristaDoble(dado, id_nodo_homo, TRUE);
         }
     }
-    //    cout << "mujeres4gays: " << cntMSubnodo << endl;
-    delete [] tuplaM;
-    //como la mujere se asigna de manera aleatoria no hace falta ordenar
-    //std::sort(subNodosMujeres.rbegin(), subNodosMujeres.rend());
-
-    m_grafo.GuardaAristaDoble(subNodosMujeres[m_dado.TiraRangoInt(0, subNodosMujeres.size())].pos, id_nodo_homo, TRUE);
-
-    subNodosMujeres.clear();
 }
 
 
@@ -2251,6 +2250,7 @@ void CProblema::SimulaPoblacion()
     unsigned int vecinas            = 0;
     unsigned int balizaVac          = 14*12; //edad en meses en la que empieza la vacunacion
     bool activaBaliza               = false;
+    int contVac = 0;
     BASE_TYPE azar                  = 0;
 
     unsigned int edad = 0;
@@ -2275,7 +2275,6 @@ void CProblema::SimulaPoblacion()
     subNodoLSP *tuplaM = new subNodoLSP[m_numero_de_nodos - m_tot_hombres];//total mujeres
     int cntHtuplas = 0;
     int cntMtuplas = 0;
-
     pos_LSP_Muj.clear();
     pos_LSP_Hom.clear();
     //Empezamos en la primera mujer hasta el final (i = tot_hombres)
@@ -2302,7 +2301,6 @@ void CProblema::SimulaPoblacion()
     delete [] tuplaH;
     std::sort(pos_LSP_Muj.rbegin(), pos_LSP_Muj.rend());
     std::sort(pos_LSP_Hom.rbegin(), pos_LSP_Hom.rend());
-
     //RECORRO MUJERES ORDENADAS DECRECIENTE POR NUMERO DE PAREJAS
     float rand = 0;
     for (unsigned int i = 0; i < pos_LSP_Muj.size(); i++)
@@ -2407,7 +2405,6 @@ void CProblema::SimulaPoblacion()
 
         }
     }
-
     //RECORRO HOMNRES ORDENADOS DECRECIENTE POR NUMERO DE PAREJAS
     for (unsigned int i = 0; i < pos_LSP_Hom.size(); i++)
     {
@@ -2512,8 +2509,6 @@ void CProblema::SimulaPoblacion()
         }
     }
 
-//    cout << " - Infecto clusters de alta conectividad en: " << m_reloj.segundos_transcurridos() << "s"<<endl;
-
 // CONTABILIDAD del turno 0, cuando se crea la vida
     for (edad = 14; edad <= 65; edad++) //son de 14 a 64 tener en cuenta para pintar
     {
@@ -2542,10 +2537,14 @@ void CProblema::SimulaPoblacion()
 //QueryPerformanceFrequency(&frequency);
 //
 //
-//LARGE_INTEGER frequency_2;        // ticks per second
-//LARGE_INTEGER t1_2, t2_2;           // ticks
-//double elapsedTime_2 = 0;
-//QueryPerformanceFrequency(&frequency_2);
+LARGE_INTEGER frequency_2;        // ticks per second
+LARGE_INTEGER t1_2, t2_2;           // ticks
+double elapsedTime_2 = 0;
+QueryPerformanceFrequency(&frequency_2);
+
+
+int cuentaDinamicaHetero = 0;
+int cuentaDinamicaHomo = 0;
 
     //Para cada turno
     for (turno = 1; turno <= m_turnos_a_simular ; turno++)
@@ -2556,22 +2555,22 @@ void CProblema::SimulaPoblacion()
         for (persona = 0; persona < m_grafo.m_numnodos; persona++)
         {
             CPersona &sujeto_actual = m_grafo.Nodo(persona);
+            sujeto_actual.m_edad_meses++; //Rev 20160904
             int cumpleanios =  (turno -1) % 12;
-//si es el mes de su cumpleaños y es dinamica empieza
+//si es el mes de su cumpleanios y es dinamica empieza
             if (( (turno -1) % 12  == sujeto_actual.m_mes_nacimiento) && (m_dinamica == true))
             //En 600 turnos tenemos 0 Enero y 599 el ultimo diciembre con valor de 11, la edad en meses es de 0-11
             {
-                // start timer for dynamic part
-//                QueryPerformanceCounter(&t1_2);
                 //sumo un anio
                 sujeto_actual.m_edad++;
+                subNodoWeight *tuplaNodo = new subNodoWeight[m_numero_de_nodos];
 //si no es homo y tiene 65 o 30 (puesto que el tratamiento es muy parecido)
                 if ((!sujeto_actual.m_homosexual)&&
                         ((sujeto_actual.m_edad == 65) ||
                          (sujeto_actual.m_edad == 30)))
                 {
+                    cuentaDinamicaHetero++;
                     //mientras tenga aristas las borro
-
                     while (m_grafo.CuantosVecinos(sujeto_actual.m_id) > 0)
                     {
                         //cout <<  "2)"<<m_grafo.Nodo(m_grafo.Vecino(sujeto_actual.m_id, m_grafo.CuantosVecinos(sujeto_actual.m_id)-1)).m_id <<"->"<<m_grafo.CuantosVecinos(m_grafo.Nodo(m_grafo.Vecino(sujeto_actual.m_id, m_grafo.CuantosVecinos(sujeto_actual.m_id)-1)).m_id) << endl;
@@ -2584,6 +2583,7 @@ void CProblema::SimulaPoblacion()
                     if (sujeto_actual.m_edad == 65)// si cumplen 36 esto no ocurre
                     {
                         sujeto_actual.m_edad = 14;
+                        sujeto_actual.m_edad_meses = 168;//Rev 20160904
                         //Reseteo
                         sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
                         sujeto_actual.m_tiempo_estado_salud_6_11 = 0;
@@ -2593,30 +2593,29 @@ void CProblema::SimulaPoblacion()
                     //No cambia el sexo y reasigno LSP
                     unsigned int ite_ini = 0;
                     unsigned int ite_fin = 0;
+                    subNodosDinamica.clear();
                     if (sujeto_actual.m_sexo == HOMBRE)
                     {
                         sujeto_actual.m_LSP = ParejasHombres(sujeto_actual.m_edad);
-                        ite_ini = 0;
-                        ite_fin = m_tot_hombres;
+                        ite_ini = m_tot_hombres;
+                        ite_fin = m_numero_de_nodos;
+                        //guardo todos los nodos para encontrar los nodos-LSP con mejor assortativity con el renacido
+                        subNodosDinamica.reserve(m_numero_de_nodos - m_tot_hombres);
                     }
                     else
                     {
-                         sujeto_actual.m_LSP = ParejasMujeres(sujeto_actual.m_edad);
-                         ite_ini = m_tot_hombres;
-                         ite_fin = m_numero_de_nodos;
+                        sujeto_actual.m_LSP = ParejasMujeres(sujeto_actual.m_edad);
+                        ite_ini = 0;
+                        ite_fin = m_tot_hombres;
+                        //guardo todos los nodos para encontrar los nodos-LSP con mejor assortativity con el renacido
+                        subNodosDinamica.reserve(m_tot_hombres);
                     }
                     sujeto_actual.m_relaciones_pendientes = sujeto_actual.m_LSP;
                     //tasa de contagio de ese grupo
                     sujeto_actual.m_T = asigna_T(sujeto_actual.m_edad);
-
-                    //Creo nuevas aristas, meto m_numero_de_nodos tuplaNodos en la estructura a ordenar subNodosDinamica
-                    subNodoWeight *tuplaNodo = new subNodoWeight[m_numero_de_nodos];
                     int peso_aux = 0;
                     int cnt = 0;
-                    //guardo todos los nodos para encontrar los nodos-LSP con mejor assortativity con el renacido
-                    subNodosDinamica.clear();
-                    subNodosDinamica.reserve(m_numero_de_nodos);
-                    for ( unsigned int ite = 0; ite < m_numero_de_nodos; ite++ )
+                    for ( unsigned int ite = ite_ini; ite < ite_fin; ite++ )
                     {
                         CPersona &persona = m_grafo.Nodo(ite);
                         //si no eres tu y sois de distinto sexo (preguntar a Rafa si esta bien ordenarlos
@@ -2631,9 +2630,14 @@ void CProblema::SimulaPoblacion()
                             cnt++;
                         }
                     }
-                    delete [] tuplaNodo;
+                // start timer for dynamic part
+                QueryPerformanceCounter(&t1_2);
                     //Ordeno por peso (assortativity) a los nodos de pareja opuesta al sujeto que cumple anios
                     std::sort(subNodosDinamica.begin(), subNodosDinamica.end());
+                QueryPerformanceCounter(&t2_2);
+                // compute and print the elapsed time in millisec for dynamic part
+                elapsedTime_2 += (t2_2.QuadPart - t1_2.QuadPart) * 1000.0 / frequency_2.QuadPart;
+//                cout << (t2_2.QuadPart - t1_2.QuadPart) * 1000.0 / frequency_2.QuadPart  << endl;
                     unsigned int i = 0;
                     while (m_grafo.CuantosVecinos(sujeto_actual.m_id) < sujeto_actual.m_LSP)//and(false))
                     {
@@ -2652,28 +2656,25 @@ void CProblema::SimulaPoblacion()
                     }
                 }
 //parte dinamica para homosexuales
-                if ((sujeto_actual.m_homosexual) &&((sujeto_actual.m_edad == 60)
+                else if ((sujeto_actual.m_homosexual) &&((sujeto_actual.m_edad == 60)
                                                     || (sujeto_actual.m_edad == 20)
                                                     || (sujeto_actual.m_edad == 25)
                                                     || (sujeto_actual.m_edad == 30)
                                                     || (sujeto_actual.m_edad == 40)))//He muerto y he resucitado
                 {
+                    cuentaDinamicaHomo++;
                     //borrar aristas
-                    //cout <<  "1)"<<sujeto_actual.m_id <<"->"<<m_grafo.CuantosVecinos(sujeto_actual.m_id) << endl;
-                    //Recorremos las aristas vecinas y se las borramos a ambos miembros homosexuales
                     while (m_grafo.CuantosVecinos(sujeto_actual.m_id) > 0)
                     {
-                        //cout <<  "2)"<<m_grafo.Nodo(m_grafo.Vecino(sujeto_actual.m_id, m_grafo.CuantosVecinos(sujeto_actual.m_id)-1)).m_id <<"->"<<m_grafo.CuantosVecinos(m_grafo.Nodo(m_grafo.Vecino(sujeto_actual.m_id, m_grafo.CuantosVecinos(sujeto_actual.m_id)-1)).m_id) << endl;
                         m_grafo.BorraAristaDoble(sujeto_actual.m_id,
                                                  m_grafo.Nodo(m_grafo.Vecino(sujeto_actual.m_id, m_grafo.CuantosVecinos(sujeto_actual.m_id)-1)).m_id,
                                                 TRUE);
-                        //cout <<  "3)"<<m_grafo.Nodo(m_grafo.Vecino(sujeto_actual.m_id, i)).m_id <<"->"<<m_grafo.CuantosVecinos(m_grafo.Nodo(m_grafo.Vecino(sujeto_actual.m_id, i)).m_id) << endl;
                         contAristasDinamicasHomoBorradas++;
                     }
-                    //cout <<  "3)"<<sujeto_actual.m_id <<"->"<<m_grafo.CuantosVecinos(sujeto_actual.m_id) << endl;
                     if (sujeto_actual.m_edad == 60)// si cumplen 36 esto no ocurre
                     {
                         sujeto_actual.m_edad = 14;
+                        sujeto_actual.m_edad_meses = 168;//Rev 20160904
                         //Reseteo
                         sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
                         sujeto_actual.m_tiempo_estado_salud_6_11 = 0;
@@ -2684,16 +2685,16 @@ void CProblema::SimulaPoblacion()
                     sujeto_actual.m_LSP = ParejasHombresHomosexuales(sujeto_actual.m_edad);
                     sujeto_actual.m_relaciones_pendientes = sujeto_actual.m_LSP;
                     //tasa de contagio de ese grupo
-                    sujeto_actual.m_T = asigna_T(sujeto_actual.m_edad);;
+                    sujeto_actual.m_T = asigna_T(sujeto_actual.m_edad);
 
                     //Creo nuevas aristas, meto m_numero_de_nodos tuplaNodos en la estructura a ordenar subNodosDinamica
-                    subNodoWeight *tuplaNodo = new subNodoWeight[m_numero_de_nodos];
+                    subNodoWeight tuplaNodo[m_tot_hombres];
                     int peso_aux = 0;
                     int cnt = 0;
                     //guardo todos los nodos para encontrar los nodos-LSP con mejor assortativity con el renacido
                     subNodosDinamica.clear();
-                    subNodosDinamica.reserve(m_numero_de_nodos);
-                    for ( unsigned int j = 0; j < m_numero_de_nodos; j++ )
+                    subNodosDinamica.reserve(m_tot_hombres);
+                    for ( unsigned int j = 0; j < m_tot_hombres; j++ )
                     {
                         CPersona &persona = m_grafo.Nodo(j);
                         //meto en una estructura para ordenar por peso (assortativity) a los homosexuales
@@ -2707,9 +2708,8 @@ void CProblema::SimulaPoblacion()
                             cnt++;
                         }
                     }
-                    delete [] tuplaNodo;
-                    //Ordeno por peso ascendente (siempre 0) (assortativity) a los nodos homo
-                    std::sort(subNodosDinamica.begin(), subNodosDinamica.end());
+                    //Ordeno por peso ascendente (no siempre 0 debido a PesoHomos) (assortativity) a los nodos homo
+                    //std::sort(subNodosDinamica.begin(), subNodosDinamica.end()); rev con Rafa 20160912
                     unsigned int i = 0;
                     while (m_grafo.CuantosVecinos(sujeto_actual.m_id) < sujeto_actual.m_LSP)
                     {
@@ -2728,19 +2728,18 @@ void CProblema::SimulaPoblacion()
                     //Ahora se le asigna una mujer de LSP>4 de manera aleaatoria
                     asignaMujer2Homo(m_tot_hombres, m_numero_de_nodos - m_tot_hombres, sujeto_actual.m_id);
                 }//parte dinamica gays
-//                QueryPerformanceCounter(&t2_2);
-                // compute and print the elapsed time in millisec for dynamic part
-//                elapsedTime_2 += (t2_2.QuadPart - t1_2.QuadPart) * 1000.0 / frequency_2.QuadPart;
+                delete [] tuplaNodo;
             }//cumpleanios
 
 ////////////////////////// V A C U N A C I O N
+
             if (turno > m_mes_vacunacion)
             {
                 activaBaliza = true;
                 //cout << "edad_meses:" << sujeto_actual.m_edad_meses << endl;
-                //si es el mes de su cumpleaños y tiene 14 años y es chica -> contador 168 (14*12)
+                //si es el mes de su cumpleanios y tiene 14 anios y es chica -> contador 168 (14*12)
                 // m_mes_nacimiento va de 0-11
-                if ((sujeto_actual.m_sexo == MUJER) && (sujeto_actual.m_edad_meses == balizaVac))
+                if ((sujeto_actual.m_sexo == MUJER) && (sujeto_actual.m_edad_meses == 168))
                 {
                     //Vacunas
                     azar = m_dado.TiraFloat();
@@ -2750,13 +2749,12 @@ void CProblema::SimulaPoblacion()
                         sujeto_actual.m_estado_salud_6_11 = VACUNADA;
                         //numero de meses que han transcurrido desde que tenía 14 anios
                         sujeto_actual.m_tiempo_estado_salud_16_18 = sujeto_actual.m_edad_meses - (14*12);
-                        //cout << "ATENCION VACUNAS" << endl;
+                        contVac++;
                     }
                 }
             }
 
 ////////////////////////// V A C U N A D A
-
             //Si tiene la Gardasil puesta SOLO MUJERES ENTRAN AQUI
             if ( (sujeto_actual.m_estado_salud_16_18 == VACUNADA) && (sujeto_actual.m_estado_salud_6_11 == VACUNADA) )
             {
@@ -2766,6 +2764,8 @@ void CProblema::SimulaPoblacion()
                 BASE_TYPE salvacion = PerdidaProteccion (sujeto_actual.m_tiempo_estado_salud_16_18);
                 if (azar > salvacion) //Si falla la tirada
                 {
+//                        cout << "perdida de protección" << endl;
+//                        sleep(1);
                         sujeto_actual.m_estado_salud_16_18          = SUSCEPTIBLE_16_18;
                         sujeto_actual.m_tiempo_estado_salud_16_18   = 0;
                         sujeto_actual.m_estado_salud_6_11           = SUSCEPTIBLE_6_11;
@@ -2773,10 +2773,7 @@ void CProblema::SimulaPoblacion()
                 }
             }//FIN VACUNADA
 
-
-
 ////////////////////////// S U S C E P T I B L E
-
             //Si el sujeto es susceptible vemos que ocurre con sus vecinos - 16_18 cancer
             if (sujeto_actual.m_estado_salud_16_18 == SUSCEPTIBLE_16_18)
             {
@@ -2810,7 +2807,6 @@ void CProblema::SimulaPoblacion()
                     }
                 }
             }//FIN SUSCEPTIBLE 16 18
-
 
             //Si el sujeto es susceptible vemos que ocurre con sus vecinos - 6_11 Verruga genital anal
             if (sujeto_actual.m_estado_salud_6_11 == SUSCEPTIBLE_6_11)
@@ -2881,8 +2877,8 @@ void CProblema::SimulaPoblacion()
 //        QueryPerformanceCounter(&t2);
         // compute and print the elapsed time in millisec
 //        cout << "recorrer todos los individuos: "<<(t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart << endl;
-//        cout << "parte dinamica gasta: " <<elapsedTime_2 << endl;
-//        elapsedTime_2 = 0;
+        //cout << "parte dinamica en turno: " << turno <<" gasta: " <<elapsedTime_2 << endl;
+        //elapsedTime_2 = 0;
 //////////////// A C T U A L I Z A   M U N D O (se hace en dos pasos para no perder recuperados en la contabilidad,
                                                 //los cuento antes de que pasen de recuperados a susceptibles)
         for (persona = 0; persona < m_grafo.m_numnodos; persona++)
@@ -2949,8 +2945,18 @@ void CProblema::SimulaPoblacion()
             }
         }
 
-        if (activaBaliza)
-            balizaVac++;
+//        if (activaBaliza)
+//            balizaVac++;
+        cout << "vacunadas en turno: " << turno << " -> " << contVac << endl;
+        contVac = 0;
+        cout << "cuentaDinamicaHetero en turno: " << turno << " -> " << cuentaDinamicaHetero << endl;
+        cout << "cuentaDinamicaHomo en turno: " << turno << " -> " << cuentaDinamicaHomo << endl;
+        cuentaDinamicaHomo = 0;
+        cuentaDinamicaHetero = 0;
+
+        cout << "tiempo de turno: " << elapsedTime_2 << endl;
+        elapsedTime_2 = 0;
+
     }//for all turnos
 
     cout << "Simulation elapsed time               :" << m_reloj.segundos_transcurridos() << "(s)" << endl;
