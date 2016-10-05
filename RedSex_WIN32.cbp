@@ -47,6 +47,7 @@
 				<Option object_output="Debug Win64" />
 				<Option type="1" />
 				<Option compiler="mingw_64-bit_compiler" />
+				<Option parameters="60_1.pro test001.sol" />
 				<Compiler>
 					<Add option="-Wextra" />
 					<Add option="-g" />
@@ -67,18 +68,19 @@
 				<Option object_output="Release Win64" />
 				<Option type="1" />
 				<Option compiler="mingw_64-bit_compiler" />
-				<Option parameters="master.pro sol001.sol" />
-				<Option projectCompilerOptionsRelation="0" />
-				<Option projectLinkerOptionsRelation="0" />
-				<Option projectLibDirsRelation="-1" />
-				<MakeCommands>
-					<Build command="" />
-					<CompileFile command="" />
-					<Clean command="" />
-					<DistClean command="" />
-					<AskRebuildNeeded command="" />
-					<SilentBuild command=" &gt; $(CMD_NULL)" />
-				</MakeCommands>
+				<Option parameters="60_1.pro fromCB_001.sol" />		<Compiler>
+					<Add option="-O2" />
+					<Add option="-W" />
+					<Add option="-m64" />
+					<Add option="-m96bit-long-double" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+				</Compiler>
+				<Linker>
+					<Add option="-static-libgcc" />
+					<Add option="-static" />
+				</Linker>
+
 			</Target>
 		</Build>
 		<Compiler>

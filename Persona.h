@@ -44,6 +44,7 @@ public:
           unsigned short tiempo_estado_salud_16_18,
           unsigned short tiempo_estado_salud_6_11,
           bool homosexual,
+          bool vacunado,
           unsigned int id);
     //void Inicia(unsigned int edad, SEXOSUJETO sexo, unsigned int relaciones);
 
@@ -61,6 +62,7 @@ public:
 	unsigned short              m_tiempo_estado_salud_16_18;
 	unsigned short              m_tiempo_estado_salud_6_11;
 	bool                        m_homosexual;
+	bool                        m_vacunado;
 	unsigned int                m_id;
 
 

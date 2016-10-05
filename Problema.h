@@ -14,27 +14,37 @@ using namespace std;
 
 struct REGISTRO_CONTABLE_TYPE
 {
-	vector<unsigned int> contagios_por_edad_16_18;
-	vector<unsigned int> contagios_por_edad_16_18_H;
-	vector<unsigned int> contagios_por_edad_16_18_M;
-	vector<unsigned int> contagios_por_edad_6_11;
-	vector<unsigned int> contagios_por_edad_6_11_H;
-	vector<unsigned int> contagios_por_edad_6_11_M;
-	vector<unsigned int> contagios_por_edad_16_18_6_11;
-	vector<unsigned int> contagios_por_edad_16_18_6_11_H;
-	vector<unsigned int> contagios_por_edad_16_18_6_11_M;
-	vector<unsigned int> contagios_por_edad_ANY;
-	vector<unsigned int> contagios_por_edad_ANY_H;
-	vector<unsigned int> contagios_por_edad_ANY_M;
-	vector<unsigned int> vacunadas;
-	vector<unsigned int> recuperados_por_edad_16_18;
-	vector<unsigned int> recuperados_por_edad_6_11;
-	vector<unsigned int> poblacion_por_edad;
+    vector<unsigned int> poblacion_por_edad;
 	vector<unsigned int> poblacion_por_edad_H;
 	vector<unsigned int> poblacion_por_edad_M;
-
-
-
+    vector<unsigned int> poblacion_por_edad_Homo;
+	vector<unsigned int> infectados_por_edad_16_18;
+	vector<unsigned int> infectados_por_edad_16_18_H;
+	vector<unsigned int> infectados_por_edad_16_18_M;
+	vector<unsigned int> infectados_por_edad_16_18_H_HOMO;
+	vector<unsigned int> infectados_por_edad_6_11;
+	vector<unsigned int> infectados_por_edad_6_11_H;
+	vector<unsigned int> infectados_por_edad_6_11_M;
+	vector<unsigned int> infectados_por_edad_6_11_H_HOMO;
+	vector<unsigned int> infectados_por_edad_16_18_6_11;
+	vector<unsigned int> infectados_por_edad_16_18_6_11_H;
+	vector<unsigned int> infectados_por_edad_16_18_6_11_M;
+	vector<unsigned int> infectados_por_edad_16_18_6_11_H_HOMO;
+    vector<unsigned int> infectados_vacunados_por_edad_16_18;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_H;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_M;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_H_HOMO;
+	vector<unsigned int> infectados_vacunados_por_edad_6_11;
+	vector<unsigned int> infectados_vacunados_por_edad_6_11_H;
+	vector<unsigned int> infectados_vacunados_por_edad_6_11_M;
+	vector<unsigned int> infectados_vacunados_por_edad_6_11_H_HOMO;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11_H;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11_M;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11_H_HOMO;
+	vector<unsigned int> vacunados_hombres_por_edad;
+	vector<unsigned int> vacunados_mujeres_por_edad;
+    vector<unsigned int> vacunados_homo_por_edad;
 };
 
 struct subNodoWeight {
@@ -64,19 +74,37 @@ enum EVENTO_CONTABLE
 	C_INFECTADO_16_18,
 	C_INFECTADO_16_18_H,
 	C_INFECTADO_16_18_M,
+	C_INFECTADO_16_18_H_HOMO,
 	C_INFECTADO_6_11,
 	C_INFECTADO_6_11_H,
 	C_INFECTADO_6_11_M,
+	C_INFECTADO_6_11_H_HOMO,
 	C_INFECTADO_16_18_6_11,
 	C_INFECTADO_16_18_6_11_H,
 	C_INFECTADO_16_18_6_11_M,
-	C_RECUPERADO_16_18,
-	C_RECUPERADO_6_11,
-	C_INFECTADO_ANY,
-	C_INFECTADO_ANY_H,
-	C_INFECTADO_ANY_M,
-	C_VACUNADA,
-	C_TOTALINDIVIDUOS,
+	C_INFECTADO_16_18_6_11_H_HOMO,
+	C_INFECTADO_VACUNADO_16_18,
+	C_INFECTADO_VACUNADO_16_18_H,
+	C_INFECTADO_VACUNADO_16_18_M,
+	C_INFECTADO_VACUNADO_16_18_H_HOMO,
+	C_INFECTADO_VACUNADO_6_11,
+	C_INFECTADO_VACUNADO_6_11_H,
+	C_INFECTADO_VACUNADO_6_11_M,
+	C_INFECTADO_VACUNADO_6_11_H_HOMO,
+	C_INFECTADO_VACUNADO_16_18_6_11,
+	C_INFECTADO_VACUNADO_16_18_6_11_H,
+	C_INFECTADO_VACUNADO_16_18_6_11_M,
+	C_INFECTADO_VACUNADO_16_18_6_11_H_HOMO,
+	C_VACUNADOS_HOMO,
+	C_VACUNADOS_HOMBRES,
+	C_VACUNADOS_MUJERES,
+    C_VACUNADO_H_16_18,
+	C_VACUNADO_H_6_11,
+	C_VACUNADO_H_16_18_6_11,
+    C_VACUNADO_M_16_18,
+	C_VACUNADO_M_6_11,
+	C_VACUNADO_M_16_18_6_11,
+	C_TOTALINDIVIDUOS_HOMO,
 	C_TOTALINDIVIDUOS_H,
 	C_TOTALINDIVIDUOS_M,
 };
@@ -115,13 +143,19 @@ public:
     BASE_TYPE m_probabilidad_de_contagio_H_6_11;
     BASE_TYPE m_probabilidad_de_contagio_M_16_18;
     BASE_TYPE m_probabilidad_de_contagio_H_16_18;
+    BASE_TYPE m_proteccion_de_vacuna_HR;
+    BASE_TYPE m_proteccion_de_vacuna_LR;
+    BASE_TYPE m_homosexuales;
     //Vacunas
-    unsigned int m_mes_vacunacion;
+    unsigned int m_mes_vacunacion_ini;
+    unsigned int m_mes_vacunacion_fin;
+    unsigned int m_dinamica_ini;
+    unsigned int m_dinamica_fin;
     BASE_TYPE m_pv;
-    BASE_TYPE m_cv;
+    BASE_TYPE m_cv_ninias;
+    BASE_TYPE m_cv_ninios;
     BASE_TYPE m_pp;
     BASE_TYPE m_tp;
-    bool m_dinamica;
 
     //Variables globales
     string       m_solucion_de_salida;
@@ -169,8 +203,10 @@ public:
 	bool PesoRed(int contTotalParejas);
 	bool TrazaPesos();
 	BASE_TYPE PesoEdades(int edadH, int edadM);
-    bool seRecupera_16_18(int tiempo_estado_salud);
-    bool seRecupera_6_11(int tiempo_estado_salud);
+//    bool seRecupera_16_18(int tiempo_estado_salud);
+//    bool seRecupera_6_11(int tiempo_estado_salud);
+    bool seRecupera_16_18(CPersona p1);
+    bool seRecupera_6_11(CPersona p1);
     bool asignaMujer2Homo(unsigned int p_tot_hombres, unsigned int p_tot_mujeres, unsigned int id_nodo_homo);
 };
 
