@@ -16,6 +16,8 @@ CPersona::CPersona()
     m_tiempo_estado_salud_6_11      = 0;
     m_T                             = 1; //es un multiplicador que si es 1 no hace nada
     m_homosexual                    = false;
+    m_verrugable                    = false;
+    m_oncogenico                    = false;
     m_vacunado                      = false;
     m_id                            = 0;
 }
@@ -50,6 +52,8 @@ CPersona::CPersona( BASE_TYPE T,
                    unsigned short tiempo_estado_salud_16_18,
                    unsigned short tiempo_estado_salud_6_11,
                    bool homosexual,
+                   bool verrugable,
+                   bool oncogenico,
                    bool vacunado,
                    unsigned int id)
 {
@@ -65,6 +69,8 @@ CPersona::CPersona( BASE_TYPE T,
     m_tiempo_estado_salud_6_11  = tiempo_estado_salud_6_11;
     m_T                         = T;
     m_homosexual                = homosexual;
+    m_verrugable                = verrugable;
+    m_oncogenico                = oncogenico;
     m_vacunado                  = vacunado;
     m_id                        = id;
 

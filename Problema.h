@@ -14,37 +14,68 @@ using namespace std;
 
 struct REGISTRO_CONTABLE_TYPE
 {
-    vector<unsigned int> poblacion_por_edad;
 	vector<unsigned int> poblacion_por_edad_H;
 	vector<unsigned int> poblacion_por_edad_M;
-    vector<unsigned int> poblacion_por_edad_Homo;
+    vector<unsigned int> poblacion_por_edad_HOMO;
+    vector<unsigned int> poblacion_por_edad_H_VERRUGABLE;
+    vector<unsigned int> poblacion_por_edad_H_ONCOGENICO;
+    vector<unsigned int> poblacion_por_edad_M_VERRUGABLE;
+    vector<unsigned int> poblacion_por_edad_M_ONCOGENICO;
 	vector<unsigned int> infectados_por_edad_16_18;
 	vector<unsigned int> infectados_por_edad_16_18_H;
 	vector<unsigned int> infectados_por_edad_16_18_M;
 	vector<unsigned int> infectados_por_edad_16_18_H_HOMO;
+	vector<unsigned int> infectados_por_edad_16_18_H_VERRUGABLE;
+	vector<unsigned int> infectados_por_edad_16_18_H_ONCOGENICO;
+	vector<unsigned int> infectados_por_edad_16_18_M_VERRUGABLE;
+	vector<unsigned int> infectados_por_edad_16_18_M_ONCOGENICO;
 	vector<unsigned int> infectados_por_edad_6_11;
 	vector<unsigned int> infectados_por_edad_6_11_H;
 	vector<unsigned int> infectados_por_edad_6_11_M;
 	vector<unsigned int> infectados_por_edad_6_11_H_HOMO;
+	vector<unsigned int> infectados_por_edad_6_11_H_VERRUGABLE;
+	vector<unsigned int> infectados_por_edad_6_11_H_ONCOGENICO;
+	vector<unsigned int> infectados_por_edad_6_11_M_VERRUGABLE;
+	vector<unsigned int> infectados_por_edad_6_11_M_ONCOGENICO;
 	vector<unsigned int> infectados_por_edad_16_18_6_11;
 	vector<unsigned int> infectados_por_edad_16_18_6_11_H;
 	vector<unsigned int> infectados_por_edad_16_18_6_11_M;
 	vector<unsigned int> infectados_por_edad_16_18_6_11_H_HOMO;
+	vector<unsigned int> infectados_por_edad_16_18_6_11_H_VERRUGABLE;
+    vector<unsigned int> infectados_por_edad_16_18_6_11_H_ONCOGENICO;
+	vector<unsigned int> infectados_por_edad_16_18_6_11_M_VERRUGABLE;
+    vector<unsigned int> infectados_por_edad_16_18_6_11_M_ONCOGENICO;
     vector<unsigned int> infectados_vacunados_por_edad_16_18;
 	vector<unsigned int> infectados_vacunados_por_edad_16_18_H;
 	vector<unsigned int> infectados_vacunados_por_edad_16_18_M;
 	vector<unsigned int> infectados_vacunados_por_edad_16_18_H_HOMO;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_H_VERRUGABLE;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_H_ONCOGENICO;
+    vector<unsigned int> infectados_vacunados_por_edad_16_18_M_VERRUGABLE;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_M_ONCOGENICO;
 	vector<unsigned int> infectados_vacunados_por_edad_6_11;
 	vector<unsigned int> infectados_vacunados_por_edad_6_11_H;
 	vector<unsigned int> infectados_vacunados_por_edad_6_11_M;
 	vector<unsigned int> infectados_vacunados_por_edad_6_11_H_HOMO;
+    vector<unsigned int> infectados_vacunados_por_edad_6_11_H_VERRUGABLE;
+    vector<unsigned int> infectados_vacunados_por_edad_6_11_H_ONCOGENICO;
+    vector<unsigned int> infectados_vacunados_por_edad_6_11_M_VERRUGABLE;
+    vector<unsigned int> infectados_vacunados_por_edad_6_11_M_ONCOGENICO;
 	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11;
 	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11_H;
 	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11_M;
 	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11_H_HOMO;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11_H_VERRUGABLE;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11_H_ONCOGENICO;
+    vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11_M_VERRUGABLE;
+	vector<unsigned int> infectados_vacunados_por_edad_16_18_6_11_M_ONCOGENICO;
 	vector<unsigned int> vacunados_hombres_por_edad;
 	vector<unsigned int> vacunados_mujeres_por_edad;
     vector<unsigned int> vacunados_homo_por_edad;
+    vector<unsigned int> vacunados_h_verrugable_por_edad;
+    vector<unsigned int> vacunados_h_oncogenico_por_edad;
+    vector<unsigned int> vacunados_m_verrugable_por_edad;
+    vector<unsigned int> vacunados_m_oncogenico_por_edad;
 };
 
 struct subNodoWeight {
@@ -71,42 +102,69 @@ struct subNodoLSP {
 
 enum EVENTO_CONTABLE
 {
+	C_TOTALINDIVIDUOS_HOMO,
+	C_TOTALINDIVIDUOS_H_VERRUGABLE,
+	C_TOTALINDIVIDUOS_H_ONCOGENICO,
+    C_TOTALINDIVIDUOS_M_VERRUGABLE,
+	C_TOTALINDIVIDUOS_M_ONCOGENICO,
+	C_TOTALINDIVIDUOS_H,
+	C_TOTALINDIVIDUOS_M,
 	C_INFECTADO_16_18,
 	C_INFECTADO_16_18_H,
 	C_INFECTADO_16_18_M,
 	C_INFECTADO_16_18_H_HOMO,
+	C_INFECTADO_16_18_H_VERRUGABLE,
+	C_INFECTADO_16_18_H_ONCOGENICO,
+    C_INFECTADO_16_18_M_VERRUGABLE,
+	C_INFECTADO_16_18_M_ONCOGENICO,
 	C_INFECTADO_6_11,
 	C_INFECTADO_6_11_H,
 	C_INFECTADO_6_11_M,
 	C_INFECTADO_6_11_H_HOMO,
+	C_INFECTADO_6_11_H_VERRUGABLE,
+	C_INFECTADO_6_11_H_ONCOGENICO,
+    C_INFECTADO_6_11_M_VERRUGABLE,
+	C_INFECTADO_6_11_M_ONCOGENICO,
 	C_INFECTADO_16_18_6_11,
 	C_INFECTADO_16_18_6_11_H,
 	C_INFECTADO_16_18_6_11_M,
 	C_INFECTADO_16_18_6_11_H_HOMO,
+	C_INFECTADO_16_18_6_11_H_VERRUGABLE,
+	C_INFECTADO_16_18_6_11_H_ONCOGENICO,
+	C_INFECTADO_16_18_6_11_M_VERRUGABLE,
+	C_INFECTADO_16_18_6_11_M_ONCOGENICO,
 	C_INFECTADO_VACUNADO_16_18,
 	C_INFECTADO_VACUNADO_16_18_H,
 	C_INFECTADO_VACUNADO_16_18_M,
 	C_INFECTADO_VACUNADO_16_18_H_HOMO,
+	C_INFECTADO_VACUNADO_16_18_H_VERRUGABLE,
+	C_INFECTADO_VACUNADO_16_18_H_ONCOGENICO,
+    C_INFECTADO_VACUNADO_16_18_M_VERRUGABLE,
+	C_INFECTADO_VACUNADO_16_18_M_ONCOGENICO,
 	C_INFECTADO_VACUNADO_6_11,
 	C_INFECTADO_VACUNADO_6_11_H,
 	C_INFECTADO_VACUNADO_6_11_M,
 	C_INFECTADO_VACUNADO_6_11_H_HOMO,
+	C_INFECTADO_VACUNADO_6_11_H_VERRUGABLE,
+	C_INFECTADO_VACUNADO_6_11_H_ONCOGENICO,
+    C_INFECTADO_VACUNADO_6_11_M_VERRUGABLE,
+	C_INFECTADO_VACUNADO_6_11_M_ONCOGENICO,
 	C_INFECTADO_VACUNADO_16_18_6_11,
 	C_INFECTADO_VACUNADO_16_18_6_11_H,
 	C_INFECTADO_VACUNADO_16_18_6_11_M,
 	C_INFECTADO_VACUNADO_16_18_6_11_H_HOMO,
+	C_INFECTADO_VACUNADO_16_18_6_11_H_VERRUGABLE,
+	C_INFECTADO_VACUNADO_16_18_6_11_H_ONCOGENICO,
+    C_INFECTADO_VACUNADO_16_18_6_11_M_VERRUGABLE,
+	C_INFECTADO_VACUNADO_16_18_6_11_M_ONCOGENICO,
 	C_VACUNADOS_HOMO,
+	C_VACUNADOS_H_VERRUGABLE,
+	C_VACUNADOS_H_ONCOGENICO,
+    C_VACUNADOS_M_VERRUGABLE,
+	C_VACUNADOS_M_ONCOGENICO,
 	C_VACUNADOS_HOMBRES,
 	C_VACUNADOS_MUJERES,
-    C_VACUNADO_H_16_18,
-	C_VACUNADO_H_6_11,
-	C_VACUNADO_H_16_18_6_11,
-    C_VACUNADO_M_16_18,
-	C_VACUNADO_M_6_11,
-	C_VACUNADO_M_16_18_6_11,
-	C_TOTALINDIVIDUOS_HOMO,
-	C_TOTALINDIVIDUOS_H,
-	C_TOTALINDIVIDUOS_M,
+
 };
 
 class CProblema
@@ -146,6 +204,8 @@ public:
     BASE_TYPE m_proteccion_de_vacuna_HR;
     BASE_TYPE m_proteccion_de_vacuna_LR;
     BASE_TYPE m_homosexuales;
+    BASE_TYPE m_verrugable;
+    BASE_TYPE m_oncogenico;
     //Vacunas
     unsigned int m_mes_vacunacion_ini;
     unsigned int m_mes_vacunacion_fin;
