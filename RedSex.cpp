@@ -9,17 +9,7 @@
 #include "../Biblioteca/grafo.h"
 using namespace std;
 
-int pruebas()
-{
-    if (((float)0 / 12) > 1.2)
-        cout << (float)0 / 12;
-    if (((float)2 / 12) > 1.2)
-        cout << (float)2 / 12;
-    if (((float)12 / 12) > 1.2)
-        cout << (float)12 / 12;
-    if (((float)15 / 12) > 1.2)
-        cout << (float)15 / 12;
-}
+
 int main(int argc, char* argv[])
 {
 	string problema_de_entrada = "problema.pro";

@@ -488,7 +488,7 @@ int CProblema::ParejasMujeres(int edad)
 //entre 18-56
 int CProblema::ParejasHombresHomosexuales(int edad)
 	{
-	BASE_TYPE azar = m_dado.TiraFloat();
+	//BASE_TYPE azar = m_dado.TiraFloat();
 	if (edad >= 14 && edad <= 19)
 	{
         return 18;
@@ -963,60 +963,32 @@ void CProblema::IniciaContabilidad()
 		m_contabilidad[turno].poblacion_por_edad_H.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_H.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_M.resize(numEdades,0);
-        m_contabilidad[turno].poblacion_por_edad_HOMO.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_M_VERRUGABLE.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_M_ONCOGENICO.resize(numEdades,0);
+        m_contabilidad[turno].poblacion_por_edad_HOMO.resize(numEdades,0);
         m_contabilidad[turno].infectados_por_edad_16_18_H.resize(numEdades,0);
         m_contabilidad[turno].infectados_por_edad_16_18_M.resize(numEdades,0);
         m_contabilidad[turno].infectados_por_edad_16_18_H_HOMO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_16_18_H_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_16_18_H_ONCOGENICO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_16_18_M_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_16_18_M_ONCOGENICO.resize(numEdades,0);
         m_contabilidad[turno].infectados_por_edad_6_11_H.resize(numEdades,0);
         m_contabilidad[turno].infectados_por_edad_6_11_M.resize(numEdades,0);
         m_contabilidad[turno].infectados_por_edad_6_11_H_HOMO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_6_11_H_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_6_11_H_ONCOGENICO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_6_11_M_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_6_11_M_ONCOGENICO.resize(numEdades,0);
         m_contabilidad[turno].infectados_por_edad_16_18_6_11_H.resize(numEdades,0);
         m_contabilidad[turno].infectados_por_edad_16_18_6_11_M.resize(numEdades,0);
         m_contabilidad[turno].infectados_por_edad_16_18_6_11_H_HOMO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_16_18_6_11_H_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_16_18_6_11_H_ONCOGENICO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_16_18_6_11_M_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_por_edad_16_18_6_11_M_ONCOGENICO.resize(numEdades,0);
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H.resize(numEdades,0);
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_M.resize(numEdades,0);
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H_HOMO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H_ONCOGENICO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_M_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_M_ONCOGENICO.resize(numEdades,0);
         m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H.resize(numEdades,0);
         m_contabilidad[turno].infectados_vacunados_por_edad_6_11_M.resize(numEdades,0);
         m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H_HOMO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H_ONCOGENICO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_6_11_M_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_6_11_M_ONCOGENICO.resize(numEdades,0);
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H.resize(numEdades,0);
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_M.resize(numEdades,0);
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_HOMO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_ONCOGENICO.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_M_VERRUGABLE.resize(numEdades,0);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_M_ONCOGENICO.resize(numEdades,0);
         m_contabilidad[turno].vacunados_hombres_por_edad.resize(numEdades,0);
         m_contabilidad[turno].vacunados_mujeres_por_edad.resize(numEdades,0);
         m_contabilidad[turno].vacunados_homo_por_edad.resize(numEdades,0);
-        m_contabilidad[turno].vacunados_h_verrugable_por_edad.resize(numEdades,0);
-        m_contabilidad[turno].vacunados_h_oncogenico_por_edad.resize(numEdades,0);
-        m_contabilidad[turno].vacunados_m_verrugable_por_edad.resize(numEdades,0);
-        m_contabilidad[turno].vacunados_m_oncogenico_por_edad.resize(numEdades,0);
     }
 }
 
@@ -1025,7 +997,7 @@ unsigned int CProblema::CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int p_edad
 {
 	// edad a buscar es en anios
     unsigned int nodo = 0;
-    unsigned int edad_sujeto = 0;
+//    unsigned int edad_sujeto = 0;
     int cuenta = 0;
     for (nodo = 0; nodo < m_numero_de_nodos; nodo++)
     {
@@ -1081,27 +1053,7 @@ unsigned int CProblema::CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int p_edad
                             (persona.m_sexo == HOMBRE) && (persona.m_homosexual))
                         ++cuenta;
                     break;
-                case C_INFECTADO_16_18_H_VERRUGABLE:
-                    if ((persona.m_estado_salud_16_18 == INFECTADO_16_18)&&
-                            (persona.m_sexo == HOMBRE) && (persona.m_verrugable))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_16_18_H_ONCOGENICO:
-                    if ((persona.m_estado_salud_16_18 == INFECTADO_16_18)&&
-                            (persona.m_sexo == HOMBRE) && (persona.m_oncogenico))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_16_18_M_VERRUGABLE:
-                    if ((persona.m_estado_salud_16_18 == INFECTADO_16_18)&&
-                            (persona.m_sexo == MUJER) && (persona.m_verrugable))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_16_18_M_ONCOGENICO:
-                    if ((persona.m_estado_salud_16_18 == INFECTADO_16_18)&&
-                            (persona.m_sexo == MUJER) && (persona.m_oncogenico))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_6_11:
+               case C_INFECTADO_6_11:
                     if (persona.m_estado_salud_6_11 == INFECTADO_6_11)
                         ++cuenta;
                     break;
@@ -1118,26 +1070,6 @@ unsigned int CProblema::CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int p_edad
                 case C_INFECTADO_6_11_H_HOMO:
                     if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE) && (persona.m_homosexual))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_6_11_H_VERRUGABLE:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == HOMBRE) && (persona.m_verrugable))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_6_11_H_ONCOGENICO:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == HOMBRE) && (persona.m_oncogenico))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_6_11_M_VERRUGABLE:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == MUJER) && (persona.m_verrugable))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_6_11_M_ONCOGENICO:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == MUJER) && (persona.m_oncogenico))
                         ++cuenta;
                     break;
                 case C_INFECTADO_16_18_6_11:
@@ -1163,53 +1095,9 @@ unsigned int CProblema::CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int p_edad
                             (persona.m_sexo == HOMBRE) && (persona.m_homosexual))
                         ++cuenta;
                     break;
-                case C_INFECTADO_16_18_6_11_H_VERRUGABLE:
-                    if ( (persona.m_estado_salud_16_18 == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == HOMBRE) && (persona.m_verrugable))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_16_18_6_11_H_ONCOGENICO:
-                    if ( (persona.m_estado_salud_16_18 == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == HOMBRE) && (persona.m_oncogenico))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_16_18_6_11_M_VERRUGABLE:
-                    if ( (persona.m_estado_salud_16_18 == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == MUJER) && (persona.m_verrugable))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_16_18_6_11_M_ONCOGENICO:
-                    if ( (persona.m_estado_salud_16_18 == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == MUJER) && (persona.m_oncogenico))
-                        ++cuenta;
-                    break;
                 case C_VACUNADOS_HOMO:
                     if ( (persona.m_vacunado)  &&
                             (persona.m_sexo == HOMBRE) && persona.m_homosexual)
-                        ++cuenta;
-                    break;
-                case C_VACUNADOS_H_VERRUGABLE:
-                    if ( (persona.m_vacunado)  &&
-                            (persona.m_sexo == HOMBRE) && persona.m_verrugable)
-                        ++cuenta;
-                    break;
-                case C_VACUNADOS_H_ONCOGENICO:
-                    if ( (persona.m_vacunado)  &&
-                            (persona.m_sexo == HOMBRE) && persona.m_oncogenico)
-                        ++cuenta;
-                    break;
-                case C_VACUNADOS_M_VERRUGABLE:
-                    if ( (persona.m_vacunado)  &&
-                            (persona.m_sexo == MUJER) && persona.m_verrugable)
-                        ++cuenta;
-                    break;
-                case C_VACUNADOS_M_ONCOGENICO:
-                    if ( (persona.m_vacunado)  &&
-                            (persona.m_sexo == MUJER) && persona.m_oncogenico)
                         ++cuenta;
                     break;
                 case C_VACUNADOS_HOMBRES:
@@ -1242,26 +1130,6 @@ unsigned int CProblema::CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int p_edad
                             (persona.m_sexo == HOMBRE) && (persona.m_homosexual)&&(persona.m_vacunado))
                         ++cuenta;
                     break;
-                case C_INFECTADO_VACUNADO_16_18_H_VERRUGABLE:
-                    if ((persona.m_estado_salud_16_18 == INFECTADO_16_18)&&
-                            (persona.m_sexo == HOMBRE) && (persona.m_verrugable)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_VACUNADO_16_18_H_ONCOGENICO:
-                    if ((persona.m_estado_salud_16_18 == INFECTADO_16_18)&&
-                            (persona.m_sexo == HOMBRE) && (persona.m_oncogenico)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_VACUNADO_16_18_M_VERRUGABLE:
-                    if ((persona.m_estado_salud_16_18 == INFECTADO_16_18)&&
-                            (persona.m_sexo == MUJER) && (persona.m_verrugable)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_VACUNADO_16_18_M_ONCOGENICO:
-                    if ((persona.m_estado_salud_16_18 == INFECTADO_16_18)&&
-                            (persona.m_sexo == MUJER) && (persona.m_oncogenico)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
                 case C_INFECTADO_VACUNADO_6_11:
                     if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)&&
                         (persona.m_vacunado))
@@ -1280,26 +1148,6 @@ unsigned int CProblema::CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int p_edad
                 case C_INFECTADO_VACUNADO_6_11_H_HOMO:
                     if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE) && (persona.m_homosexual)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_VACUNADO_6_11_H_VERRUGABLE:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == HOMBRE) && (persona.m_verrugable)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_VACUNADO_6_11_H_ONCOGENICO:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == HOMBRE) && (persona.m_oncogenico)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_VACUNADO_6_11_M_VERRUGABLE:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == MUJER) && (persona.m_verrugable)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                case C_INFECTADO_VACUNADO_6_11_M_ONCOGENICO:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == MUJER) && (persona.m_oncogenico)&&(persona.m_vacunado))
                         ++cuenta;
                     break;
                 case C_INFECTADO_VACUNADO_16_18_6_11:
@@ -1323,30 +1171,6 @@ unsigned int CProblema::CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int p_edad
                     if ( (persona.m_estado_salud_16_18 == INFECTADO_16_18) &&
                             (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE) && (persona.m_homosexual)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                 case C_INFECTADO_VACUNADO_16_18_6_11_H_VERRUGABLE:
-                    if ( (persona.m_estado_salud_16_18 == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == HOMBRE) && (persona.m_verrugable)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                 case C_INFECTADO_VACUNADO_16_18_6_11_H_ONCOGENICO:
-                    if ( (persona.m_estado_salud_16_18 == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == HOMBRE) && (persona.m_oncogenico)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                 case C_INFECTADO_VACUNADO_16_18_6_11_M_VERRUGABLE:
-                    if ( (persona.m_estado_salud_16_18 == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == MUJER) && (persona.m_verrugable)&&(persona.m_vacunado))
-                        ++cuenta;
-                    break;
-                 case C_INFECTADO_VACUNADO_16_18_6_11_M_ONCOGENICO:
-                    if ( (persona.m_estado_salud_16_18 == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
-                            (persona.m_sexo == MUJER) && (persona.m_oncogenico)&&(persona.m_vacunado))
                         ++cuenta;
                     break;
                 default:
@@ -1883,6 +1707,8 @@ bool CProblema::TrazaPesos()
         }
     }
     TRAZA("edades" + entero_a_texto((int)time(NULL)) , traza);
+
+    return true;
 }
 
 bool CProblema::PesoRed(int contTotalParejas)
@@ -2446,7 +2272,11 @@ bool CProblema::GuardaSimulacion(bool valida)
 				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H_HOMO[edad-14])+",";
 				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H[edad-14])+",";
 				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_M[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_HOMO[edad-14])+"}";
+				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_HOMO[edad-14])+",";
+				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE[edad-14])+",";
+				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO[edad-14])+",";
+				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M_VERRUGABLE[edad-14])+",";
+				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M_ONCOGENICO[edad-14])+"}";
 				if (edad <= 65 - 1)
 					cadena += ",";
 			}
@@ -2536,7 +2366,7 @@ bool CProblema::seRecupera_6_11(CPersona p1)
 }
 
 //Asignar una mujer de mas de cuatro parejas a cada homo
-bool CProblema::asignaMujer2Homo(unsigned int p_tot_hombres, unsigned int p_tot_mujeres, unsigned int id_nodo_homo)
+bool CProblema::asignaMujer2Homo(unsigned int p_tot_hombres, unsigned int id_nodo_homo)
 {
     bool salir = false;
     int dado = 0;
@@ -2549,18 +2379,20 @@ bool CProblema::asignaMujer2Homo(unsigned int p_tot_hombres, unsigned int p_tot_
             m_grafo.GuardaAristaDoble(dado, id_nodo_homo, TRUE);
         }
     }
+
+    return salir;
 }
 
 
 
 void CProblema::SimulaPoblacion()
 {
-    //oomprobaciones dinamicas
+    //comprobaciones dinamicas
     unsigned int contAristasDinamicasHeteroBorradas = 0;
     unsigned int contAristasDinamicasHetero = 0;
     unsigned int contAristasDinamicasHomo = 0;
     unsigned int contAristasDinamicasHomoBorradas = 0;
-
+    bool realizadoVerrugableOncogenico = false;
     unsigned int turno              = 0;
     unsigned int persona            = 0;
     unsigned int vecinas            = 0;
@@ -2837,52 +2669,24 @@ void CProblema::SimulaPoblacion()
         m_contabilidad[turno].infectados_por_edad_16_18_H[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_H, edad);
         m_contabilidad[turno].infectados_por_edad_16_18_M[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_M, edad);
         m_contabilidad[turno].infectados_por_edad_16_18_H_HOMO[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_H_HOMO, edad);//new
-        m_contabilidad[turno].infectados_por_edad_16_18_H_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_H_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_por_edad_16_18_H_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_H_ONCOGENICO, edad);
-        m_contabilidad[turno].infectados_por_edad_16_18_M_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_M_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_por_edad_16_18_M_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_M_ONCOGENICO, edad);
         m_contabilidad[turno].infectados_por_edad_6_11_H[edad-14]        = CuentaPersonas(C_INFECTADO_6_11_H, edad);
         m_contabilidad[turno].infectados_por_edad_6_11_M[edad-14]        = CuentaPersonas(C_INFECTADO_6_11_M, edad);
         m_contabilidad[turno].infectados_por_edad_6_11_H_HOMO[edad-14]   = CuentaPersonas(C_INFECTADO_6_11_H_HOMO, edad);
-        m_contabilidad[turno].infectados_por_edad_6_11_H_VERRUGABLE[edad-14]   = CuentaPersonas(C_INFECTADO_6_11_H_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_por_edad_6_11_H_ONCOGENICO[edad-14]   = CuentaPersonas(C_INFECTADO_6_11_H_ONCOGENICO, edad);
-        m_contabilidad[turno].infectados_por_edad_6_11_M_VERRUGABLE[edad-14]   = CuentaPersonas(C_INFECTADO_6_11_M_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_por_edad_6_11_M_ONCOGENICO[edad-14]   = CuentaPersonas(C_INFECTADO_6_11_M_ONCOGENICO, edad);//new
         m_contabilidad[turno].infectados_por_edad_16_18_6_11_H[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_6_11_H, edad);
         m_contabilidad[turno].infectados_por_edad_16_18_6_11_M[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_6_11_M, edad);
         m_contabilidad[turno].infectados_por_edad_16_18_6_11_H_HOMO[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_6_11_H_HOMO, edad);
-        m_contabilidad[turno].infectados_por_edad_16_18_6_11_H_VERRUGABLE[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_6_11_H_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_por_edad_16_18_6_11_H_ONCOGENICO[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_6_11_H_ONCOGENICO, edad);
-        m_contabilidad[turno].infectados_por_edad_16_18_6_11_M_VERRUGABLE[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_6_11_H_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_por_edad_16_18_6_11_M_ONCOGENICO[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_6_11_H_ONCOGENICO, edad);//new
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H[edad-14]       = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_H, edad);
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_M[edad-14]       = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_M, edad);
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H_HOMO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_H_HOMO, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_H_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_H_ONCOGENICO, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_M_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_M_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_M_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_M_ONCOGENICO, edad);//new
         m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H[edad-14]        = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_H, edad);
         m_contabilidad[turno].infectados_vacunados_por_edad_6_11_M[edad-14]        = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_M, edad);
         m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H_HOMO[edad-14]   = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_H_HOMO, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H_VERRUGABLE[edad-14]   = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_H_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H_ONCOGENICO[edad-14]   = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_H_ONCOGENICO, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_6_11_M_VERRUGABLE[edad-14]   = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_M_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_6_11_M_ONCOGENICO[edad-14]   = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_M_ONCOGENICO, edad);//new
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_H, edad);
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_M[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_M, edad);
         m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_HOMO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_H_HOMO, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_H_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_H_ONCOGENICO, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_M_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_M_VERRUGABLE, edad);
-        m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_M_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_M_ONCOGENICO, edad);//new
         m_contabilidad[turno].vacunados_hombres_por_edad[edad-14]                       = CuentaPersonas(C_VACUNADOS_HOMBRES, edad);//new
         m_contabilidad[turno].vacunados_mujeres_por_edad[edad-14]                       = CuentaPersonas(C_VACUNADOS_MUJERES, edad);//new
         m_contabilidad[turno].vacunados_homo_por_edad[edad-14]                          = CuentaPersonas(C_VACUNADOS_HOMO, edad);
-        m_contabilidad[turno].vacunados_h_verrugable_por_edad[edad-14]                          = CuentaPersonas(C_VACUNADOS_H_VERRUGABLE, edad);
-        m_contabilidad[turno].vacunados_h_oncogenico_por_edad[edad-14]                          = CuentaPersonas(C_VACUNADOS_H_ONCOGENICO, edad);
-        m_contabilidad[turno].vacunados_m_verrugable_por_edad[edad-14]                          = CuentaPersonas(C_VACUNADOS_M_VERRUGABLE, edad);
-        m_contabilidad[turno].vacunados_m_oncogenico_por_edad[edad-14]                          = CuentaPersonas(C_VACUNADOS_M_ONCOGENICO, edad);//new
     }
 
 //
@@ -2897,7 +2701,7 @@ void CProblema::SimulaPoblacion()
 //
 //LARGE_INTEGER frequency_2;        // ticks per second
 //LARGE_INTEGER t1_2, t2_2;           // ticks
-double elapsedTime_2 = 0;
+//double elapsedTime_2 = 0;
 //QueryPerformanceFrequency(&frequency_2);
 
 
@@ -2944,7 +2748,7 @@ int cuentaDinamicaHomo = 0;
                             //cout <<  "3)"<<m_grafo.Nodo(m_grafo.Vecino(sujeto_actual.m_id, i)).m_id <<"->"<<m_grafo.CuantosVecinos(m_grafo.Nodo(m_grafo.Vecino(sujeto_actual.m_id, i)).m_id) << endl;
                             contAristasDinamicasHeteroBorradas++;
                         }
-                        if (sujeto_actual.m_edad >= 65)
+                        if (sujeto_actual.m_edad >= 65)//reciclo
                         {
                             sujeto_actual.m_edad = 14;
                             sujeto_actual.m_edad_meses = 168;//Rev 20160904
@@ -2954,6 +2758,8 @@ int cuentaDinamicaHomo = 0;
                             sujeto_actual.m_estado_salud_16_18 = SUSCEPTIBLE_16_18;
                             sujeto_actual.m_estado_salud_6_11 = SUSCEPTIBLE_6_11;
                             sujeto_actual.m_vacunado = false;
+                            sujeto_actual.m_verrugable = false;
+                            sujeto_actual.m_oncogenico = false;
                         }
                         //No cambia el sexo y reasigno LSP
                         unsigned int ite_ini = 0;
@@ -3036,7 +2842,7 @@ int cuentaDinamicaHomo = 0;
                                                     TRUE);
                             contAristasDinamicasHomoBorradas++;
                         }
-                        if (sujeto_actual.m_edad >= 60)// si cumplen 36 esto no ocurre
+                        if (sujeto_actual.m_edad >= 60)//reciclo homo
                         {
                             sujeto_actual.m_edad = 14;
                             sujeto_actual.m_edad_meses = 168;//Rev 20160904
@@ -3046,6 +2852,8 @@ int cuentaDinamicaHomo = 0;
                             sujeto_actual.m_estado_salud_16_18 = SUSCEPTIBLE_16_18;
                             sujeto_actual.m_estado_salud_6_11 = SUSCEPTIBLE_6_11;
                             sujeto_actual.m_vacunado = false;
+                            sujeto_actual.m_verrugable = false;
+                            sujeto_actual.m_oncogenico = false;
                         }
                         //No cambia el sexo y reasigno LSP, aqui todos son hombres homo
                         sujeto_actual.m_LSP = ParejasHombresHomosexuales(sujeto_actual.m_edad);
@@ -3092,11 +2900,27 @@ int cuentaDinamicaHomo = 0;
                             i++;
                         }
                         //Ahora se le asigna una mujer de LSP>4 de manera aleaatoria
-                        asignaMujer2Homo(m_tot_hombres, m_numero_de_nodos - m_tot_hombres, sujeto_actual.m_id);
+                        asignaMujer2Homo(m_tot_hombres,  sujeto_actual.m_id);
                     }//parte dinamica gays
                     delete [] tuplaNodo;
                 }
             }//cumpleanios
+
+
+////////////////////////// V E R R U G A B L E  O N C O G E N I C O (antes de vacunar -> turno = m_mes_vacunacion_ini)
+            if ((turno == m_mes_vacunacion_ini) && (! realizadoVerrugableOncogenico))
+            {
+                cout <<"nueva feature on"<< endl;
+                realizadoVerrugableOncogenico = true;
+                for (persona = 0; persona < m_grafo.m_numnodos; persona++)
+                {
+                    CPersona &sujeto_actual = m_grafo.Nodo(persona);
+                    if (sujeto_actual.m_estado_salud_16_18 = INFECTADO_16_18)
+                        sujeto_actual.m_oncogenico = ( m_dado.TiraFloat() < m_oncogenico? true : false );
+                    if (sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11)
+                        sujeto_actual.m_verrugable = ( m_dado.TiraFloat() < m_verrugable? true : false );
+                }
+            }
 
 ////////////////////////// V A C U N A C I O N
 
@@ -3113,7 +2937,6 @@ int cuentaDinamicaHomo = 0;
                         sujeto_actual.m_estado_salud_16_18 = VACUNADA;
                         sujeto_actual.m_estado_salud_6_11 = VACUNADA;
                         sujeto_actual.m_vacunado = true; //20160920
-                        //sujeto_actual.m_tiempo_estado_salud_16_18 = sujeto_actual.m_edad_meses - (14*12);
                         sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
                         contVacMujeres++;
                     }
@@ -3127,8 +2950,6 @@ int cuentaDinamicaHomo = 0;
                         sujeto_actual.m_estado_salud_16_18 = VACUNADA;
                         sujeto_actual.m_estado_salud_6_11 = VACUNADA;
                         sujeto_actual.m_vacunado = true; //20160920
-                        //numero de meses que han transcurrido desde que tenía 14 anios
-                        //sujeto_actual.m_tiempo_estado_salud_16_18 = sujeto_actual.m_edad_meses - (14*12);
                         sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
                         contVacHombres++;
                     }
@@ -3173,6 +2994,7 @@ int cuentaDinamicaHomo = 0;
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_16_18 = INFECTADO_16_18_NEW;
+                                sujeto_actual.m_oncogenico = m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_oncogenico;
                             }
                         }
                         //Si es mujer, comprobamos si se infecta de una pareja hombre
@@ -3182,6 +3004,7 @@ int cuentaDinamicaHomo = 0;
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_16_18 = INFECTADO_16_18_NEW;
+                                sujeto_actual.m_oncogenico = m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_oncogenico;
                             }
                         }
 
@@ -3207,6 +3030,8 @@ int cuentaDinamicaHomo = 0;
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11_NEW;
+                                //feature
+                                sujeto_actual.m_verrugable = m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_verrugable;
                             }
                         }
                         //Si es mujer, comprobamos si se infecta de una pareja hombre
@@ -3216,6 +3041,7 @@ int cuentaDinamicaHomo = 0;
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11_NEW;
+                                sujeto_actual.m_verrugable = m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_verrugable;
                             }
                         }
 
@@ -3353,52 +3179,24 @@ int cuentaDinamicaHomo = 0;
             m_contabilidad[turno].infectados_por_edad_16_18_H[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_H, edad);
             m_contabilidad[turno].infectados_por_edad_16_18_M[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_M, edad);
             m_contabilidad[turno].infectados_por_edad_16_18_H_HOMO[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_H_HOMO, edad);//new
-            m_contabilidad[turno].infectados_por_edad_16_18_H_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_H_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_por_edad_16_18_H_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_H_ONCOGENICO, edad);
-            m_contabilidad[turno].infectados_por_edad_16_18_M_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_M_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_por_edad_16_18_M_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_M_ONCOGENICO, edad);
             m_contabilidad[turno].infectados_por_edad_6_11_H[edad-14]        = CuentaPersonas(C_INFECTADO_6_11_H, edad);
             m_contabilidad[turno].infectados_por_edad_6_11_M[edad-14]        = CuentaPersonas(C_INFECTADO_6_11_M, edad);
             m_contabilidad[turno].infectados_por_edad_6_11_H_HOMO[edad-14]   = CuentaPersonas(C_INFECTADO_6_11_H_HOMO, edad);
-            m_contabilidad[turno].infectados_por_edad_6_11_H_VERRUGABLE[edad-14]   = CuentaPersonas(C_INFECTADO_6_11_H_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_por_edad_6_11_H_ONCOGENICO[edad-14]   = CuentaPersonas(C_INFECTADO_6_11_H_ONCOGENICO, edad);
-            m_contabilidad[turno].infectados_por_edad_6_11_M_VERRUGABLE[edad-14]   = CuentaPersonas(C_INFECTADO_6_11_M_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_por_edad_6_11_M_ONCOGENICO[edad-14]   = CuentaPersonas(C_INFECTADO_6_11_M_ONCOGENICO, edad);//new
             m_contabilidad[turno].infectados_por_edad_16_18_6_11_H[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_6_11_H, edad);
             m_contabilidad[turno].infectados_por_edad_16_18_6_11_M[edad-14]  = CuentaPersonas(C_INFECTADO_16_18_6_11_M, edad);
             m_contabilidad[turno].infectados_por_edad_16_18_6_11_H_HOMO[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_6_11_H_HOMO, edad);
-            m_contabilidad[turno].infectados_por_edad_16_18_6_11_H_VERRUGABLE[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_6_11_H_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_por_edad_16_18_6_11_H_ONCOGENICO[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_6_11_H_ONCOGENICO, edad);
-            m_contabilidad[turno].infectados_por_edad_16_18_6_11_M_VERRUGABLE[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_6_11_H_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_por_edad_16_18_6_11_M_ONCOGENICO[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_6_11_H_ONCOGENICO, edad);//new
             m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H[edad-14]       = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_H, edad);
             m_contabilidad[turno].infectados_vacunados_por_edad_16_18_M[edad-14]       = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_M, edad);
             m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H_HOMO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_H_HOMO, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_H_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_16_18_H_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_H_ONCOGENICO, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_16_18_M_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_M_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_16_18_M_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_M_ONCOGENICO, edad);//new
             m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H[edad-14]        = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_H, edad);
             m_contabilidad[turno].infectados_vacunados_por_edad_6_11_M[edad-14]        = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_M, edad);
             m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H_HOMO[edad-14]   = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_H_HOMO, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H_VERRUGABLE[edad-14]   = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_H_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_6_11_H_ONCOGENICO[edad-14]   = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_H_ONCOGENICO, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_6_11_M_VERRUGABLE[edad-14]   = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_M_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_6_11_M_ONCOGENICO[edad-14]   = CuentaPersonas(C_INFECTADO_VACUNADO_6_11_M_ONCOGENICO, edad);//new
             m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_H, edad);
             m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_M[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_M, edad);
             m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_HOMO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_H_HOMO, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_H_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_H_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_H_ONCOGENICO, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_M_VERRUGABLE[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_M_VERRUGABLE, edad);
-            m_contabilidad[turno].infectados_vacunados_por_edad_16_18_6_11_M_ONCOGENICO[edad-14]  = CuentaPersonas(C_INFECTADO_VACUNADO_16_18_6_11_M_ONCOGENICO, edad);//new
             m_contabilidad[turno].vacunados_hombres_por_edad[edad-14]                       = CuentaPersonas(C_VACUNADOS_HOMBRES, edad);//new
             m_contabilidad[turno].vacunados_mujeres_por_edad[edad-14]                       = CuentaPersonas(C_VACUNADOS_MUJERES, edad);//new
             m_contabilidad[turno].vacunados_homo_por_edad[edad-14]                          = CuentaPersonas(C_VACUNADOS_HOMO, edad);
-            m_contabilidad[turno].vacunados_h_verrugable_por_edad[edad-14]                          = CuentaPersonas(C_VACUNADOS_H_VERRUGABLE, edad);
-            m_contabilidad[turno].vacunados_h_oncogenico_por_edad[edad-14]                          = CuentaPersonas(C_VACUNADOS_H_ONCOGENICO, edad);
-            m_contabilidad[turno].vacunados_m_verrugable_por_edad[edad-14]                          = CuentaPersonas(C_VACUNADOS_M_VERRUGABLE, edad);
-            m_contabilidad[turno].vacunados_m_oncogenico_por_edad[edad-14]                          = CuentaPersonas(C_VACUNADOS_M_ONCOGENICO, edad);//new
         }
 //cout << m_reloj.segundos_transcurridos() << "(s) tras contabilidad" << endl;
         //Actualizo los recuperados a susceptibles, una vez contabilizados
@@ -3462,8 +3260,8 @@ int cuentaDinamicaHomo = 0;
 void CProblema::Soluciona(string entrada, string salida)
 {
     unsigned int realizacion = 0;
-    unsigned int grado_medio = 0;
-    unsigned int pesos = 0;
+//    unsigned int grado_medio = 0;
+//    unsigned int pesos = 0;
     //se puede manipular para pruebas y
     //medir cuanta memoria ocupa la red sin relaciones
 
