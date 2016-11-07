@@ -14,7 +14,7 @@
   #define SW_VERSION      "VPHS_20160227_W01"
 #endif
 #ifdef __UNIX__
-  #define SW_VERSION      "VPHS_20160227_L01"
+  #define SW_VERSION      "VPHS_20161028_L01"
 #endif
 
 #include "../Biblioteca/definiciones.h"

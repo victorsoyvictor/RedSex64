@@ -11,7 +11,7 @@ CPersona::CPersona()
     m_relaciones_pendientes                    = 0;
     m_LSP                           = 0;
     m_estado_salud_6_11             = SUSCEPTIBLE_6_11;
-    m_estado_salud_16_18            = SUSCEPTIBLE_16_18;
+    m_estado_salud_HR            = SUSCEPTIBLE_16_18;
     m_tiempo_estado_salud_16_18     = 0;
     m_tiempo_estado_salud_6_11      = 0;
     m_T                             = 1; //es un multiplicador que si es 1 no hace nada
@@ -64,7 +64,7 @@ CPersona::CPersona( BASE_TYPE T,
     m_relaciones_pendientes     = relaciones_pendientes;
     m_LSP                       = LSP;
     m_estado_salud_6_11         = estado_salud_6_11;
-    m_estado_salud_16_18        = estado_salud_16_18;
+    m_estado_salud_HR        = estado_salud_16_18;
     m_tiempo_estado_salud_16_18 = tiempo_estado_salud_16_18;
     m_tiempo_estado_salud_6_11  = tiempo_estado_salud_6_11;
     m_T                         = T;
