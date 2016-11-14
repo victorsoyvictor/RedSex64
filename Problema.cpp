@@ -186,8 +186,8 @@ int CProblema::EdadHombres()
 			return 63;
 		else if (azar < 0.9715291210391849)
 			return 64;
-//		else
-//			return 65;
+		else
+			return 65;
 		break;
 
 	default:
@@ -311,8 +311,8 @@ int CProblema::EdadMujeres()
 			return 63;
 		else if (azar < 0.9691686084423287)
 			return 64;
-//		else
-//			return 65;
+		else
+			return 65;
 		break;
 
 	default:
