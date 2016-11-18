@@ -11,10 +11,10 @@
 #define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
 
 #ifdef __WIN32__
-  #define SW_VERSION      "VPHS_20160227_W01"
+  #define SW_VERSION      "VPHS_20161118_W01"
 #endif
 #ifdef __UNIX__
-  #define SW_VERSION      "VPHS_20161028_L01"
+  #define SW_VERSION      "VPHS_20161118_W01"
 #endif
 
 #include "../Biblioteca/definiciones.h"
