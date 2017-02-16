@@ -18,7 +18,9 @@ struct REGISTRO_CONTABLE_TYPE
 	vector<unsigned int> poblacion_por_edad_M;
     vector<unsigned int> poblacion_por_edad_HOMO;
     vector<unsigned int> poblacion_por_edad_H_VERRUGABLE;
+    vector<unsigned int> poblacion_por_edad_H_VERRUGABLE_HOMO;
     vector<unsigned int> poblacion_por_edad_H_ONCOGENICO;
+    vector<unsigned int> poblacion_por_edad_H_ONCOGENICO_HOMO;
     vector<unsigned int> poblacion_por_edad_M_VERRUGABLE;
     vector<unsigned int> poblacion_por_edad_M_ONCOGENICO;
 	vector<unsigned int> infectados_por_edad_HR;
@@ -76,7 +78,9 @@ enum EVENTO_CONTABLE
 {
 	C_TOTALINDIVIDUOS_HOMO,
 	C_TOTALINDIVIDUOS_H_VERRUGABLE,
+	C_TOTALINDIVIDUOS_H_VERRUGABLE_HOMO,
 	C_TOTALINDIVIDUOS_H_ONCOGENICO,
+	C_TOTALINDIVIDUOS_H_ONCOGENICO_HOMO,
     C_TOTALINDIVIDUOS_M_VERRUGABLE,
 	C_TOTALINDIVIDUOS_M_ONCOGENICO,
 	C_TOTALINDIVIDUOS_H,

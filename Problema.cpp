@@ -972,7 +972,9 @@ void CProblema::IniciaContabilidad()
         m_contabilidad[turno].poblacion_por_edad_H.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_M.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE.resize(numEdades,0);
+        m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE_HOMO.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO.resize(numEdades,0);
+        m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO_HOMO.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_M_VERRUGABLE.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_M_ONCOGENICO.resize(numEdades,0);
         m_contabilidad[turno].poblacion_por_edad_HOMO.resize(numEdades,0);
@@ -1020,8 +1022,16 @@ unsigned int CProblema::CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int p_edad
                     if ((persona.m_sexo == HOMBRE) && (persona.m_verrugable))
                         ++cuenta;
                     break;
+                case C_TOTALINDIVIDUOS_H_VERRUGABLE_HOMO:
+                    if ((persona.m_sexo == HOMBRE) && (persona.m_verrugable) && (persona.m_homosexual))
+                        ++cuenta;
+                    break;
                 case C_TOTALINDIVIDUOS_H_ONCOGENICO:
                     if ((persona.m_sexo == HOMBRE) && (persona.m_oncogenico))
+                        ++cuenta;
+                    break;
+                case C_TOTALINDIVIDUOS_H_ONCOGENICO_HOMO:
+                    if ((persona.m_sexo == HOMBRE) && (persona.m_oncogenico) && (persona.m_homosexual))
                         ++cuenta;
                     break;
                 case C_TOTALINDIVIDUOS_M_VERRUGABLE:
@@ -2293,9 +2303,11 @@ bool CProblema::GuardaSimulacion(bool valida)
 				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_LR_M[edad-14])+",";
 				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_LR_H_HOMO[edad-14])+",";
 				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO[edad-14])+",";
 				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M_VERRUGABLE[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M_ONCOGENICO[edad-14])+"}";
+				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE_HOMO[edad-14])+",";
+				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO[edad-14])+",";
+				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M_ONCOGENICO[edad-14])+",";
+				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO_HOMO[edad-14])+"}";
 				if (edad <= 65 - 1)
 					cadena += ",";
 			}
@@ -2675,7 +2687,9 @@ void CProblema::SimulaPoblacion()
         m_contabilidad[turno].poblacion_por_edad_M[edad-14]             = CuentaPersonas(C_TOTALINDIVIDUOS_M, edad);
         m_contabilidad[turno].poblacion_por_edad_HOMO[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_HOMO, edad);
         m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_H_VERRUGABLE, edad);
+        m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE_HOMO[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_H_VERRUGABLE_HOMO, edad);
         m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_H_ONCOGENICO, edad);
+        m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO_HOMO[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_H_ONCOGENICO_HOMO, edad);
         m_contabilidad[turno].poblacion_por_edad_M_VERRUGABLE[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_M_VERRUGABLE, edad);
         m_contabilidad[turno].poblacion_por_edad_M_ONCOGENICO[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_M_ONCOGENICO, edad);
         m_contabilidad[turno].infectados_por_edad_HR_H[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_H, edad);
@@ -3217,7 +3231,9 @@ int cuentaDinamicaHomo = 0;
             m_contabilidad[turno].poblacion_por_edad_M[edad-14]             = CuentaPersonas(C_TOTALINDIVIDUOS_M, edad);
             m_contabilidad[turno].poblacion_por_edad_HOMO[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_HOMO, edad);
             m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_H_VERRUGABLE, edad);
+            m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE_HOMO[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_H_VERRUGABLE_HOMO, edad);
             m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_H_ONCOGENICO, edad);
+            m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO_HOMO[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_H_ONCOGENICO_HOMO, edad);
             m_contabilidad[turno].poblacion_por_edad_M_VERRUGABLE[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_M_VERRUGABLE, edad);
             m_contabilidad[turno].poblacion_por_edad_M_ONCOGENICO[edad-14]           = CuentaPersonas(C_TOTALINDIVIDUOS_M_ONCOGENICO, edad);
             m_contabilidad[turno].infectados_por_edad_HR_H[edad-14]       = CuentaPersonas(C_INFECTADO_16_18_H, edad);
