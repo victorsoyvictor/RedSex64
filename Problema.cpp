@@ -2376,7 +2376,7 @@ BASE_TYPE CProblema::PesoEdades(int edadH, int edadM)
 bool CProblema::seRecupera(CPersona p1, bool HR)
 {
     bool res = false;
-    float aux = (float)(HR ? p1.m_tiempo_estado_salud_16_18 : p1.m_tiempo_estado_salud_6_11 / 12.0);
+    float aux = (float)(HR ? p1.m_tiempo_estado_salud_16_18 : p1.m_tiempo_estado_salud_6_11) / 12.0;
     if (HR && ( aux > (p1.m_sexo == HOMBRE ? m_meanDuration_H_16_18 : m_meanDuration_M_16_18)))
     {
         res = true;
@@ -2593,7 +2593,7 @@ void CProblema::SimulaPoblacion()
             else if ( (rand > m_14_17__HR) && (rand < m_14_17__HR + m_14_17__LR) )
             {
                 sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
-                sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0,8);
+                sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_H_6_11 * 12);
             }
 
             else if ( (rand > m_14_17__HR) && (rand < m_14_17__HR + m_14_17__LR + m_14_17__AMBOS) )
