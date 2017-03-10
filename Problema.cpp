@@ -952,6 +952,35 @@ bool CProblema::LeeProblema(string problema_de_entrada,string solucion_de_salida
         archivo.LeeLinea(buffer);
         m_proteccion_de_vacuna_HR = texto_a_TipoBase(buffer);
 
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
+        m_mes_catchup_ini = texto_a_entero(buffer);
+
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
+        m_mes_catchup_fin = texto_a_entero(buffer);
+
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
+        m_edad_catchup_ini = texto_a_entero(buffer);
+
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
+        m_edad_catchup_fin = texto_a_entero(buffer);
+
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
+        m_cv_catchup = texto_a_TipoBase(buffer);
+
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
+        m_alpha_1 = texto_a_TipoBase(buffer);
+
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
+        m_alpha_2 = texto_a_TipoBase(buffer);
+
+
         m_tiempo_CPU = 0;
 
         return true;
@@ -1417,13 +1446,13 @@ unsigned int CProblema::GeneraRed(int p_num_nodos)
 
 
     //verifico lo que he hecho
-    cout << "Total hombres        : " << m_tot_hombres << "     | Total mujeres      : " << tot_mujeres << endl;
-    cout << "Parejas de hombres   : " << ph <<            "     | Parejas de mujeres : " << pm << endl;
-    cout << "Mismas parejas hombres y mujeres: " << (ph == pm) << endl;
-    cout << "No. de h10           : " << h10 <<           "     | No. de m10         : " << m10 << endl;
-    cout << "H. Celibes           : " << mojigato <<      "     | M. Celibes         : " << mojigata << endl;
-    cout << " ---> H. homosexuales: " << m_tot_homo << endl;
-    cout << "No nodes                      : "<< m_numero_de_nodos << endl;
+    cout << "Total men         : " << m_tot_hombres << "     | Total women        : " << tot_mujeres << endl;
+    cout << "Men couples       : " << ph <<            "     | Women couples      : " << pm << endl;
+    cout << "Equal couples?    " << (ph == pm) << endl;
+    cout << "No. h10           : " << h10 <<           "     | No. m10            : " << m10 << endl;
+    cout << "Men no couples    : " << mojigato <<      "     | Women no couples   : " << mojigata << endl;
+    cout << " ---> Gays: " << m_tot_homo << endl;
+    cout << "No nodes                      : " << m_numero_de_nodos << endl;
     cout << "Sexual active (LSP 0 excluded): " << m_tot_hombres - mojigato + tot_mujeres - mojigata << endl;
     cout << "<k>param                      : " << m_grado_medio << endl;
     cout << "<k>generated (excluding gays) : " << (BASE_TYPE)(ph/(BASE_TYPE)(m_tot_hombres - mojigato)) << endl;
@@ -1490,7 +1519,8 @@ unsigned int CProblema::GeneraRed(int p_num_nodos)
                 // calculamos el peso entre la mujer i y el hombre j ...
   				//ATENCION CAMBIO 20160309 NUEVA FUNCION DE PESOS
   				//peso_aux = PesoEdades( persona.m_edad,  m_grafo.Nodo(subNodosMujeres[i].pos).m_edad );
-  				peso_aux = PesoParejas( persona.m_LSP, subNodosMujeres[i].LSP );
+  				peso_aux = PesoParejas( persona.m_LSP, subNodosMujeres[i].LSP ) +
+                            PesoEdades( persona.m_edad, m_grafo.Nodo(subNodosMujeres[i].pos).m_edad);
                 // y lo aniadimos a la lista
                 tuplaH[cnt].pos = j;
                 tuplaH[cnt].weight = peso_aux;
@@ -1545,7 +1575,7 @@ unsigned int CProblema::GeneraRed(int p_num_nodos)
     //Limpiamos estructuras
     subNodosMujeres.clear();
     subNodosHombres.clear();
-	cout << "-> conectividad generated in: "<< m_reloj.segundos_transcurridos() << "(s)"<< endl;
+	cout << "-> edges generated in: "<< m_reloj.segundos_transcurridos() << "(s)"<< endl;
 
  //Ahora Victor organiza los homosexuales.
     //Los ordena por orden descendente por numero de parejas
@@ -1606,7 +1636,9 @@ unsigned int CProblema::GeneraRed(int p_num_nodos)
                 // calculamos el peso entre el homo i y el homo j ...
                 //ATENCION CAMBIO 20160309 NUEVA FUNCION DE PESOS
                 //peso_aux = PesoEdades( persona.m_edad,  m_grafo.Nodo(subNodosHombresHomo[i].pos).m_edad );
-                peso_aux = PesoParejas( persona.m_LSP, subNodosHombresHomo[i].LSP ) + PesoHomos(persona.m_edad, m_grafo.Nodo(subNodosHombresHomo[i].pos).m_edad );
+                peso_aux = PesoParejas( persona.m_LSP, subNodosHombresHomo[i].LSP ) +
+                            PesoHomos(persona.m_edad, m_grafo.Nodo(subNodosHombresHomo[i].pos).m_edad ) +
+                            PesoEdades( persona.m_edad,  m_grafo.Nodo(subNodosHombresHomo[i].pos).m_edad );;
                 // y lo aniadimos a la lista
                 tuplaHomoCandidato[cnt].pos = j;
                 tuplaHomoCandidato[cnt].weight = peso_aux;
@@ -1703,6 +1735,8 @@ unsigned int CProblema::GeneraRed(int p_num_nodos)
     cout << endl;
     cout << "-> Network generated in: "<< m_reloj.segundos_transcurridos() << "(s)"<< endl;
     cout << endl;
+    cout << "generando media y desviacion (ver ficheros)..." << endl;
+    DesviacionEdadRed(MediaEdadRed(ph), ph);
 
     return m_tot_homo;
 }
@@ -1728,30 +1762,74 @@ bool CProblema::TrazaPesos()
     return true;
 }
 
-bool CProblema::PesoRed(int contTotalParejas)
+BASE_TYPE CProblema::MediaEdadRed(int contTotalParejas)
 {
-    BASE_TYPE peso_aux = 0;
-    BASE_TYPE peso_aux_TOTAL = 0;
+    int peso_aux = 0;int cont = 0;
+    BASE_TYPE media = 0;
     string traza = "";
     unsigned int vecinas = 0;
     for (unsigned int persona = 0; persona < m_tot_hombres; persona++)
     {
         CPersona &sujeto_actual = m_grafo.Nodo(persona);
         vecinas = m_grafo.CuantosVecinos(persona);
-        //Recorremos las aristas vecinas
-        for (unsigned int i = 0; i < vecinas ; i++)
+        if (!sujeto_actual.m_homosexual)
         {
-            peso_aux = PesoEdades(sujeto_actual.m_edad, m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad);
-            peso_aux_TOTAL += peso_aux;
-            traza+= TipoBase_a_texto(peso_aux) + "\n";
-            //cout << "aqui" << endl;
+            //Recorremos las aristas vecinas
+            for (unsigned int i = 0; i < vecinas ; i++)
+            {
+                //peso_aux = PesoEdades(sujeto_actual.m_edad, m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad);
+                peso_aux = sujeto_actual.m_edad - m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad;
+                media += peso_aux;
+                //traza+= entero_a_texto(peso_aux) + "\n";
+                cont++;
+            }
         }
     }
-    traza += "\n" + TipoBase_a_texto(peso_aux_TOTAL) + "\n";
-    peso_aux_TOTAL = peso_aux_TOTAL / contTotalParejas;
-    traza += TipoBase_a_texto(peso_aux_TOTAL);
-    TRAZA("pesos" + entero_a_texto((int)time(NULL)) , traza);
-    return true;
+    traza += "\n" + TipoBase_a_texto(m_alpha_1) +
+                "\n" + TipoBase_a_texto(m_alpha_2) +
+                "\n";
+    media = media / contTotalParejas;
+    traza += TipoBase_a_texto(media);
+    TRAZA("Media" + entero_a_texto((int)time(NULL)) , traza);
+    return media;
+}
+
+BASE_TYPE CProblema::DesviacionEdadRed(BASE_TYPE media, int contTotalParejas)
+{
+    int peso_aux = 0; int cont = 0;
+    BASE_TYPE desviacion_tipica = 0;
+    BASE_TYPE aux = 0.0;
+    string traza = "";
+    unsigned int vecinas = 0;
+    for (unsigned int persona = 0; persona < m_tot_hombres; persona++)
+    {
+        CPersona &sujeto_actual = m_grafo.Nodo(persona);
+        vecinas = m_grafo.CuantosVecinos(persona);
+        if (!sujeto_actual.m_homosexual)
+        {
+            //Recorremos las aristas vecinas
+            for (unsigned int i = 0; i < vecinas ; i++)
+            {
+                //peso_aux = PesoEdades(sujeto_actual.m_edad, m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad);
+                peso_aux = sujeto_actual.m_edad - m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad;
+                aux = (BASE_TYPE)peso_aux - media;
+                //traza+= TipoBase_a_texto(aux) + " | ";
+                aux = aux * aux;
+                desviacion_tipica += aux;
+                //traza+= TipoBase_a_texto(aux) + "\n";
+                cont++;
+            }
+        }
+    }
+
+    desviacion_tipica = (  desviacion_tipica / ((BASE_TYPE)contTotalParejas - 1) );
+    desviacion_tipica = sqrt(  desviacion_tipica / ((BASE_TYPE)contTotalParejas - 1) );
+    traza += "\n" + TipoBase_a_texto(m_alpha_1) +
+            "\n" + TipoBase_a_texto(m_alpha_2) +
+            "\n";
+    traza += TipoBase_a_texto(desviacion_tipica);
+    TRAZA("Desviacion" + entero_a_texto((int)time(NULL)) , traza);
+    return desviacion_tipica;
 }
 
 bool CProblema::GuardaRed(string archivo)
@@ -2332,7 +2410,7 @@ bool CProblema::GuardaSimulacion(bool valida)
 }
 
 //Assortativity actual
-int CProblema::PesoParejas(int parejas1, int parejas2)
+BASE_TYPE CProblema::PesoParejas(int parejas1, int parejas2)
 {
     int ret = -1;
     // Si las parejas de cada uno son menores que 5, consideraremos el minimo entre la suma de parejas y 6.
@@ -2347,12 +2425,13 @@ int CProblema::PesoParejas(int parejas1, int parejas2)
     }
     else
         ret = 100;
-    return ret;
+    return m_alpha_1 * ret;
 }
 
+//20170305
 BASE_TYPE CProblema::PesoEdades(int edadH, int edadM)
 {
-    BASE_TYPE ret = -1;
+    BASE_TYPE ret = -1.0;
     // Si las parejas de cada uno son menores que 5, consideraremos el minimo entre la suma de parejas y 6.
     // De esta forma para pocas parejas se relacionan entre ellos y con mas parejas, mas mezcla
     if ((edadH <= 18) && (edadH < 20))
@@ -2368,7 +2447,7 @@ BASE_TYPE CProblema::PesoEdades(int edadH, int edadM)
         ret = abs(edadH - edadM - 1.8);
     }
 
-    return ret;
+    return m_alpha_2 * ret;
 
 }
 
@@ -2422,8 +2501,13 @@ void CProblema::SimulaPoblacion()
     unsigned int vecinas            = 0;
     int contVacHombres              = 0;
     int contVacMujeres              = 0;
-    BASE_TYPE azar                  = 0;
+    int contVacMujeresCatchtup      = 0;
 
+    BASE_TYPE azar                  = 0;
+//  vacunas catch up pongo por turno
+    BASE_TYPE periodo               = 0.0;
+    BASE_TYPE cob                   = 0.0;
+    bool vacunacion_deshabilitada   = false;
     unsigned int edad = 0;
 
 	cout << "IN : " << m_problema_de_entrada << endl;
@@ -2819,7 +2903,8 @@ int cuentaDinamicaHomo = 0;
                             //tanto si es hombre como si es mujer
                             if ((persona.m_id != sujeto_actual.m_id) && (persona.m_sexo != sujeto_actual.m_sexo))//BUG 001
                             {
-                                peso_aux = PesoParejas( persona.m_LSP, sujeto_actual.m_LSP );
+                                peso_aux = PesoParejas( persona.m_LSP, sujeto_actual.m_LSP ) +
+                                            PesoEdades(persona.m_edad, sujeto_actual.m_edad);
                                 // y lo aniadimos a la lista
                                 tuplaNodo[cnt].pos = persona.m_id;
                                 tuplaNodo[cnt].weight = peso_aux;
@@ -2900,7 +2985,9 @@ int cuentaDinamicaHomo = 0;
                             //meto en una estructura para ordenar por peso (assortativity) a los homosexuales
                             if (persona.m_id != sujeto_actual.m_id)
                             {
-                                peso_aux = PesoParejas( persona.m_LSP, sujeto_actual.m_LSP ) + PesoHomos(persona.m_edad, sujeto_actual.m_edad);
+                                peso_aux = PesoParejas( persona.m_LSP, sujeto_actual.m_LSP ) +
+                                            PesoHomos(persona.m_edad, sujeto_actual.m_edad) +
+                                            PesoEdades(persona.m_edad, sujeto_actual.m_edad);
                                 // y lo aniadimos a la lista
                                 tuplaNodo[cnt].pos = j;
                                 tuplaNodo[cnt].weight = peso_aux;
@@ -2967,7 +3054,7 @@ int cuentaDinamicaHomo = 0;
 
 ////////////////////////// V A C U N A C I O N
 
-            if ((turno >= m_mes_vacunacion_ini) && (turno <= m_mes_vacunacion_fin))
+            if ((turno >= m_mes_vacunacion_ini) && (turno <= m_mes_vacunacion_fin) && not vacunacion_deshabilitada)
             {
                 //si es el mes de su cumpleanios y tiene 14 anios y es chica -> contador 168 (14*12)
                 // m_mes_nacimiento va de 0-11
@@ -2997,6 +3084,40 @@ int cuentaDinamicaHomo = 0;
                         contVacHombres++;
                     }
                 }
+            }
+
+////////////////////////// V A C U N A C I O N  CATCH  UP
+            if (turno == m_mes_catchup_ini)
+            {
+
+                periodo = m_mes_catchup_fin - m_mes_catchup_ini;
+                cob = (1/periodo) * pow(m_cv_catchup,(1/periodo));
+                vacunacion_deshabilitada = true;
+
+            }
+            if (    (sujeto_actual.m_sexo == MUJER) &&
+                        ( (sujeto_actual.m_edad >= m_edad_catchup_ini) && (sujeto_actual.m_edad <= m_edad_catchup_fin)  ) &&
+                        (    (turno >= m_mes_catchup_ini) && (turno <= m_mes_catchup_fin) )      &&
+                        (   not sujeto_actual.m_vacunado    )
+
+                        )
+            {
+                //Vacunas catch up
+                azar = m_dado.TiraFloat();
+                if (azar < cob)
+                {
+                    sujeto_actual.m_estado_salud_HR = VACUNADA;
+                    sujeto_actual.m_estado_salud_6_11 = VACUNADA;
+                    sujeto_actual.m_vacunado = true; //20160920
+                    sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
+                    contVacMujeresCatchtup++;
+                }
+            }
+            if (turno == m_mes_catchup_fin)
+            {
+
+                vacunacion_deshabilitada = false;
+
             }
 ////////////////////////// P E R D I D A  P R O T E C C I O N
             //Si tiene la Gardasil puesta
@@ -3305,6 +3426,7 @@ int cuentaDinamicaHomo = 0;
     }//for all turnos
 
     cout << "Simulation elapsed time               :" << m_reloj.segundos_transcurridos() << "(s)" << endl;
+    cout << contVacMujeresCatchtup << endl;
 //    cout << endl;
 //    if (m_dinamica)
 //    {

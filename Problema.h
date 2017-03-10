@@ -160,11 +160,19 @@ public:
     unsigned int m_mes_vacunacion_fin;
     unsigned int m_dinamica_ini;
     unsigned int m_dinamica_fin;
+    unsigned int m_mes_catchup_ini;
+    unsigned int m_mes_catchup_fin;
+    unsigned int m_edad_catchup_ini;
+    unsigned int m_edad_catchup_fin;
     BASE_TYPE m_pv;
     BASE_TYPE m_cv_ninias;
     BASE_TYPE m_cv_ninios;
+    BASE_TYPE m_cv_catchup;
     BASE_TYPE m_pp;
     BASE_TYPE m_tp;
+    BASE_TYPE m_alpha_1;
+    BASE_TYPE m_alpha_2;
+
 
     //Variables globales
     string       m_solucion_de_salida;
@@ -207,9 +215,10 @@ public:
 	int ParejasHombres(int edad);
 	int ParejasMujeres(int edad);
 	int ParejasHombresHomosexuales(int edad);
-	int PesoParejas(int parejas1, int parejas);
+	BASE_TYPE PesoParejas(int parejas1, int parejas);
 	int PesoHomos(unsigned int edad1, unsigned int edad2);
-	bool PesoRed(int contTotalParejas);
+	BASE_TYPE MediaEdadRed(int contTotalParejas);
+	BASE_TYPE DesviacionEdadRed(BASE_TYPE media, int contTotalParejas);
 	bool TrazaPesos();
 	BASE_TYPE PesoEdades(int edadH, int edadM);
     bool seRecupera(CPersona p1, bool HR);
