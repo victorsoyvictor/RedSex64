@@ -1735,9 +1735,9 @@ unsigned int CProblema::GeneraRed(int p_num_nodos)
     cout << endl;
     cout << "-> Network generated in: "<< m_reloj.segundos_transcurridos() << "(s)"<< endl;
     cout << endl;
-    cout << "generando media y desviacion (ver ficheros)..." << endl;
-    DesviacionEdadRed(MediaEdadRed(ph), ph);
-
+    //cout << "generando media y desviacion (ver ficheros)..." << endl;
+    //DesviacionEdadRed(MediaEdadRed(ph), ph);
+    //TrazaPesos();
     return m_tot_homo;
 }
 
@@ -1749,12 +1749,17 @@ bool CProblema::TrazaPesos()
     for (unsigned int persona = 0; persona < m_tot_hombres; persona++)
     {
         CPersona &sujeto_actual = m_grafo.Nodo(persona);
-        vecinas = m_grafo.CuantosVecinos(persona);
-        //Recorremos las aristas vecinas mujeres
-        for (unsigned int i = 0; i < vecinas ; i++)
+        if (!sujeto_actual.m_homosexual)
         {
-            traza+= entero_a_texto( sujeto_actual.m_edad_meses) + ", ";
-            traza+= entero_a_texto(m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad_meses) + "\n";
+
+
+            vecinas = m_grafo.CuantosVecinos(persona);
+            //Recorremos las aristas vecinas mujeres
+            for (unsigned int i = 0; i < vecinas ; i++)
+            {
+                traza+= entero_a_texto( sujeto_actual.m_edad_meses) + ", ";
+                traza+= entero_a_texto(m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad_meses) + "\n";
+            }
         }
     }
     TRAZA("edades" + entero_a_texto((int)time(NULL)) , traza);
@@ -1777,10 +1782,8 @@ BASE_TYPE CProblema::MediaEdadRed(int contTotalParejas)
             //Recorremos las aristas vecinas
             for (unsigned int i = 0; i < vecinas ; i++)
             {
-                //peso_aux = PesoEdades(sujeto_actual.m_edad, m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad);
                 peso_aux = sujeto_actual.m_edad - m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad;
                 media += peso_aux;
-                //traza+= entero_a_texto(peso_aux) + "\n";
                 cont++;
             }
         }
@@ -1796,7 +1799,8 @@ BASE_TYPE CProblema::MediaEdadRed(int contTotalParejas)
 
 BASE_TYPE CProblema::DesviacionEdadRed(BASE_TYPE media, int contTotalParejas)
 {
-    int peso_aux = 0; int cont = 0;
+    int peso_aux = 0;
+    int cont = 0;
     BASE_TYPE desviacion_tipica = 0;
     BASE_TYPE aux = 0.0;
     string traza = "";
@@ -1810,21 +1814,19 @@ BASE_TYPE CProblema::DesviacionEdadRed(BASE_TYPE media, int contTotalParejas)
             //Recorremos las aristas vecinas
             for (unsigned int i = 0; i < vecinas ; i++)
             {
-                //peso_aux = PesoEdades(sujeto_actual.m_edad, m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad);
                 peso_aux = sujeto_actual.m_edad - m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_edad;
                 aux = (BASE_TYPE)peso_aux - media;
-                //traza+= TipoBase_a_texto(aux) + " | ";
                 aux = aux * aux;
                 desviacion_tipica += aux;
-                //traza+= TipoBase_a_texto(aux) + "\n";
                 cont++;
             }
         }
     }
 
     desviacion_tipica = (  desviacion_tipica / ((BASE_TYPE)contTotalParejas - 1) );
-    desviacion_tipica = sqrt(  desviacion_tipica / ((BASE_TYPE)contTotalParejas - 1) );
-    traza += "\n" + TipoBase_a_texto(m_alpha_1) +
+    desviacion_tipica = sqrt(  desviacion_tipica );
+    traza += "\n tot parejas:" + entero_a_texto(contTotalParejas) +
+            "\n" + TipoBase_a_texto(m_alpha_1) +
             "\n" + TipoBase_a_texto(m_alpha_2) +
             "\n";
     traza += TipoBase_a_texto(desviacion_tipica);
@@ -2412,7 +2414,7 @@ bool CProblema::GuardaSimulacion(bool valida)
 //Assortativity actual
 BASE_TYPE CProblema::PesoParejas(int parejas1, int parejas2)
 {
-    int ret = -1;
+    BASE_TYPE ret = -1;
     // Si las parejas de cada uno son menores que 5, consideraremos el minimo entre la suma de parejas y 6.
     // De esta forma para pocas parejas se relacionan entre ellos y con mas parejas, mas mezcla
     if ((parejas1 <= 4) && (parejas2 <= 4))
@@ -2425,7 +2427,10 @@ BASE_TYPE CProblema::PesoParejas(int parejas1, int parejas2)
     }
     else
         ret = 100;
-    return m_alpha_1 * ret;
+
+    ret = m_alpha_1 * ret;
+    //cout << "peso por parejas: "+TipoBase_a_texto(ret) << endl;
+    return ret;
 }
 
 //20170305
@@ -2447,7 +2452,9 @@ BASE_TYPE CProblema::PesoEdades(int edadH, int edadM)
         ret = abs(edadH - edadM - 1.8);
     }
 
-    return m_alpha_2 * ret;
+    ret = m_alpha_2 * ret;
+    //cout << TipoBase_a_texto(ret) << endl;
+    return ret;
 
 }
 
