@@ -170,6 +170,7 @@ public:
     BASE_TYPE m_cv_catchup;
     BASE_TYPE m_pp;
     BASE_TYPE m_tp;
+    BASE_TYPE m_tini;
     BASE_TYPE m_alpha_1;
     BASE_TYPE m_alpha_2;
 

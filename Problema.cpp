@@ -847,7 +847,7 @@ bool CProblema::LeeProblema(string problema_de_entrada,string solucion_de_salida
         m_probabilidad_de_contagio_H_16_18 = texto_a_TipoBase(buffer);
 
         //VACUNACION
-        // return ((( - m_pp ) / m_tp ) * t ) + m_pv;
+        // return ((( - m_pp ) / m_tp - tini ) * t ) + m_pv;
         archivo.LeeLinea(buffer);
         archivo.LeeLinea(buffer);
         m_pv = texto_a_TipoBase(buffer);
@@ -863,6 +863,10 @@ bool CProblema::LeeProblema(string problema_de_entrada,string solucion_de_salida
         archivo.LeeLinea(buffer);
         archivo.LeeLinea(buffer);
         m_tp = texto_a_TipoBase(buffer);
+
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
+        m_tini = texto_a_TipoBase(buffer);
 
         archivo.LeeLinea(buffer);
         archivo.LeeLinea(buffer);
@@ -1099,44 +1103,44 @@ unsigned int CProblema::CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int p_edad
                         ++cuenta;
                     break;
                case C_INFECTADO_6_11:
-                    if (persona.m_estado_salud_6_11 == INFECTADO_6_11)
+                    if (persona.m_estado_salud_LR == INFECTADO_6_11)
                         ++cuenta;
                     break;
                 case C_INFECTADO_6_11_H:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                    if ((persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE))
                         ++cuenta;
                     break;
                 case C_INFECTADO_6_11_M:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                    if ((persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == MUJER))
                         ++cuenta;
                     break;
                 case C_INFECTADO_6_11_H_HOMO:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                    if ((persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE) && (persona.m_homosexual))
                         ++cuenta;
                     break;
                 case C_INFECTADO_16_18_6_11:
                     if ( (persona.m_estado_salud_HR == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11))
+                            (persona.m_estado_salud_LR == INFECTADO_6_11))
                         ++cuenta;
                     break;
                 case C_INFECTADO_16_18_6_11_H:
                     if ( (persona.m_estado_salud_HR == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                            (persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE))
                         ++cuenta;
                     break;
                 case C_INFECTADO_16_18_6_11_M:
                     if ( (persona.m_estado_salud_HR == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                            (persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == MUJER))
                         ++cuenta;
                     break;
                 case C_INFECTADO_16_18_6_11_H_HOMO:
                     if ( (persona.m_estado_salud_HR == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                            (persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE) && (persona.m_homosexual))
                         ++cuenta;
                     break;
@@ -1176,45 +1180,45 @@ unsigned int CProblema::CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int p_edad
                         ++cuenta;
                     break;
                 case C_INFECTADO_VACUNADO_6_11:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)&&
+                    if ((persona.m_estado_salud_LR == INFECTADO_6_11)&&
                         (persona.m_vacunado))
                         ++cuenta;
                     break;
                 case C_INFECTADO_VACUNADO_6_11_H:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                    if ((persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE)&&(persona.m_vacunado))
                         ++cuenta;
                     break;
                 case C_INFECTADO_VACUNADO_6_11_M:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                    if ((persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == MUJER)&&(persona.m_vacunado))
                         ++cuenta;
                     break;
                 case C_INFECTADO_VACUNADO_6_11_H_HOMO:
-                    if ((persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                    if ((persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE) && (persona.m_homosexual)&&(persona.m_vacunado))
                         ++cuenta;
                     break;
                 case C_INFECTADO_VACUNADO_16_18_6_11:
                     if ( (persona.m_estado_salud_HR == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)&&(persona.m_vacunado))
+                            (persona.m_estado_salud_LR == INFECTADO_6_11)&&(persona.m_vacunado))
                         ++cuenta;
                     break;
                 case C_INFECTADO_VACUNADO_16_18_6_11_H:
                     if ( (persona.m_estado_salud_HR == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                            (persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE)&&(persona.m_vacunado))
                         ++cuenta;
                     break;
                 case C_INFECTADO_VACUNADO_16_18_6_11_M:
                     if ( (persona.m_estado_salud_HR == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                            (persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == MUJER)&&(persona.m_vacunado))
                         ++cuenta;
                     break;
                 case C_INFECTADO_VACUNADO_16_18_6_11_H_HOMO:
                     if ( (persona.m_estado_salud_HR == INFECTADO_16_18) &&
-                            (persona.m_estado_salud_6_11 == INFECTADO_6_11)  &&
+                            (persona.m_estado_salud_LR == INFECTADO_6_11)  &&
                             (persona.m_sexo == HOMBRE) && (persona.m_homosexual)&&(persona.m_vacunado))
                         ++cuenta;
                     break;
@@ -1380,7 +1384,7 @@ unsigned int CProblema::GeneraRed(int p_num_nodos)
         for (unsigned int cnt = 0; cnt < m_tot_hombres; cnt++)
         {
           if ( (m_grafo.Nodo(cnt).m_sexo == HOMBRE) && (m_grafo.Nodo(cnt).m_LSP == 10) )
-            //Distribucion uniforme entre parejas de LSP 10 para darles 10 o más
+            //Distribucion uniforme entre parejas de LSP 10 para darles 10 o mÃ¡s
           {
             tirada = m_dado.TiraRangoInt(10, 2 * par_h_10 - 10);
             m_grafo.Nodo(cnt).m_LSP = tirada;
@@ -1980,7 +1984,7 @@ bool CProblema::GuardaRed(string archivo)
             linea += separador;
             linea += entero_a_texto(m_grafo.Nodo(vertice).m_estado_salud_HR);
             linea += separador;
-            linea += entero_a_texto(m_grafo.Nodo(vertice).m_estado_salud_6_11);
+            linea += entero_a_texto(m_grafo.Nodo(vertice).m_estado_salud_LR);
             linea += separador;
             linea += entero_a_texto(m_grafo.Nodo(vertice).m_tiempo_estado_salud_16_18);
             linea += separador;
@@ -2164,7 +2168,7 @@ bool CProblema::LeeRed(string archivo)
             entrada.LeePalabra(linea);
             m_grafo.Nodo(vertice).m_estado_salud_HR = (ESTADO_SALUD_TIPO) texto_a_entero(linea);
             entrada.LeePalabra(linea);
-            m_grafo.Nodo(vertice).m_estado_salud_6_11 = (ESTADO_SALUD_TIPO) texto_a_entero(linea);
+            m_grafo.Nodo(vertice).m_estado_salud_LR = (ESTADO_SALUD_TIPO) texto_a_entero(linea);
             entrada.LeePalabra(linea);
             m_grafo.Nodo(vertice).m_tiempo_estado_salud_16_18 = texto_a_entero(linea);
             entrada.LeePalabra(linea);
@@ -2512,8 +2516,8 @@ void CProblema::SimulaPoblacion()
 
     BASE_TYPE azar                  = 0;
 //  vacunas catch up pongo por turno
-    BASE_TYPE periodo               = 0.0;
-    BASE_TYPE cob                   = 0.0;
+    BASE_TYPE gvac                  = 0.0;
+    BASE_TYPE vacXturno             = 0.0;
     bool vacunacion_deshabilitada   = false;
     unsigned int edad = 0;
 
@@ -2580,12 +2584,12 @@ void CProblema::SimulaPoblacion()
 
             else if ( (rand > m_14_17__HR) && (rand < m_14_17__HR + m_14_17__LR) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_M_6_11 * 12);
             }
             else if ( (rand > m_14_17__HR) && (rand < m_14_17__HR + m_14_17__LR + m_14_17__AMBOS) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_M_6_11 * 12);
                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
                 sujeto_actual.m_tiempo_estado_salud_16_18 = m_dado.TiraRangoInt(0, m_meanDuration_M_16_18 * 12);
@@ -2603,13 +2607,13 @@ void CProblema::SimulaPoblacion()
 
             else if ( (rand > m_18_29__HR) && (rand < m_18_29__HR + m_18_29__LR) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_M_6_11 * 12);
             }
 
             else if ( (rand > m_18_29__HR) && (rand < m_18_29__HR + m_14_17__LR + m_18_29__AMBOS) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_M_6_11 * 12);
                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
                 sujeto_actual.m_tiempo_estado_salud_16_18 = m_dado.TiraRangoInt(0, m_meanDuration_M_16_18 * 12);
@@ -2628,13 +2632,13 @@ void CProblema::SimulaPoblacion()
 
             else if ( (rand > m_30_39__HR) && (rand < m_30_39__HR + m_30_39__LR) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_M_6_11 * 12);
             }
 
             else if ( (rand > m_30_39__HR) && (rand < m_30_39__HR + m_14_17__LR + m_30_39__AMBOS) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_M_6_11 * 12);
                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
                 sujeto_actual.m_tiempo_estado_salud_16_18 = m_dado.TiraRangoInt(0, m_meanDuration_M_16_18 * 12);
@@ -2653,13 +2657,13 @@ void CProblema::SimulaPoblacion()
 
             else if ( (rand > m_40_65__HR) && (rand < m_40_65__HR + m_40_65__LR) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_M_6_11 * 12);
             }
 
             else if ( (rand > m_40_65__HR) && (rand < m_40_65__HR + m_14_17__LR + m_40_65__AMBOS) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_M_6_11 * 12);
                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
                 sujeto_actual.m_tiempo_estado_salud_16_18 = m_dado.TiraRangoInt(0, m_meanDuration_M_16_18 * 12);
@@ -2683,13 +2687,13 @@ void CProblema::SimulaPoblacion()
 
             else if ( (rand > m_14_17__HR) && (rand < m_14_17__HR + m_14_17__LR) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_H_6_11 * 12);
             }
 
             else if ( (rand > m_14_17__HR) && (rand < m_14_17__HR + m_14_17__LR + m_14_17__AMBOS) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_H_6_11 * 12);
                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
                 sujeto_actual.m_tiempo_estado_salud_16_18 = m_dado.TiraRangoInt(0, m_meanDuration_H_16_18 * 12);
@@ -2707,13 +2711,13 @@ void CProblema::SimulaPoblacion()
 
             else if ( (rand > m_18_29__HR) && (rand < m_18_29__HR + m_18_29__LR) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_H_6_11 * 12);
             }
 
             else if ( (rand > m_18_29__HR) && (rand < m_18_29__HR + m_14_17__LR + m_18_29__AMBOS) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_H_6_11 * 12);
                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
                 sujeto_actual.m_tiempo_estado_salud_16_18 = m_dado.TiraRangoInt(0,m_meanDuration_H_16_18 * 12);
@@ -2731,13 +2735,13 @@ void CProblema::SimulaPoblacion()
 
             else if ( (rand > m_30_39__HR) && (rand < m_30_39__HR + m_30_39__LR) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_H_6_11 * 12);
             }
 
             else if ( (rand > m_30_39__HR) && (rand < m_30_39__HR + m_14_17__LR + m_30_39__AMBOS) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_H_6_11 * 12);
                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
                 sujeto_actual.m_tiempo_estado_salud_16_18 = m_dado.TiraRangoInt(0, m_meanDuration_H_16_18 * 12);
@@ -2756,13 +2760,13 @@ void CProblema::SimulaPoblacion()
 
             else if ( (rand > m_40_65__HR) && (rand < m_40_65__HR + m_40_65__LR) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_H_6_11 * 12);
             }
 
             else if ( (rand > m_40_65__HR) && (rand < m_40_65__HR + m_14_17__LR + m_40_65__AMBOS) )
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = m_dado.TiraRangoInt(0, m_meanDuration_H_6_11 * 12);
                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
                 sujeto_actual.m_tiempo_estado_salud_16_18 = m_dado.TiraRangoInt(0, m_meanDuration_H_16_18 * 12);
@@ -2807,7 +2811,7 @@ void CProblema::SimulaPoblacion()
     }
 
 //
-// Ejecutamos la simulación
+// Ejecutamos la simulaciÃ³n
 //
     string m_turnos_a_simular_progreso =  porcentaje(0, 0, m_turnos_a_simular );
 //LARGE_INTEGER frequency;        // ticks per second
@@ -2828,6 +2832,56 @@ int cuentaDinamicaHomo = 0;
     //Para cada turno
     for (turno = 1; turno <= m_turnos_a_simular ; turno++)
     {
+        //20170410
+        if (turno == m_mes_catchup_ini)
+        {
+
+            gvac = ( m_numero_de_nodos/ (2*50) ) * (m_edad_catchup_fin - m_edad_catchup_ini + 1);
+            cout << " gvac: " << TipoBase_a_texto(gvac) << endl;
+            vacXturno = ( gvac / (m_mes_catchup_fin - m_mes_catchup_ini + 1) ) * m_cv_catchup;
+            cout << " vacXturno: " << TipoBase_a_texto(vacXturno) << endl;
+            vacXturno = round (vacXturno);
+            cout << " vacXturno round: " <<  vacXturno << endl;
+            vacunacion_deshabilitada = true;
+
+        }
+        if ((turno >= m_mes_catchup_ini) and (turno <= m_mes_catchup_fin ))
+        {
+            int fxv = gvac - contVacMujeresCatchtup;
+            BASE_TYPE P = vacXturno / (fxv);
+            //cout << "probabilidad: " <<TipoBase_a_texto(P) << endl;
+            //Para cada nodo mujer
+            for (unsigned int cnt = m_tot_hombres; cnt < m_grafo.m_numnodos; cnt++)
+            {
+                CPersona &sujeto_actual = m_grafo.Nodo(cnt);
+
+                if ( (sujeto_actual.m_sexo == MUJER) &&
+                        ((sujeto_actual.m_edad >= m_edad_catchup_ini) &&
+                            (sujeto_actual.m_edad <= m_edad_catchup_fin) ) &&
+                        ( not sujeto_actual.m_vacunado )
+
+                    )
+                {
+                    //Vacunas catch up
+                    if (m_dado.TiraFloat() < P)
+                    {
+                        sujeto_actual.m_estado_salud_HR = VACUNADA;
+                        sujeto_actual.m_estado_salud_LR = VACUNADA;
+                        sujeto_actual.m_vacunado = true;
+                        //La siguiente linea no se por que la puse...
+                        sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
+                        contVacMujeresCatchtup++;
+                    }
+                }
+            }
+        }
+
+        //si se acaba el catch up vacunamos con normalidad
+        if (turno == m_mes_catchup_fin)
+        {
+            //Flag booleano que inhibe la vacuacion
+            vacunacion_deshabilitada = false;
+        }
         // start timer for turn
 //        QueryPerformanceCounter(&t1);
         //Para cada nodo
@@ -2873,7 +2927,7 @@ int cuentaDinamicaHomo = 0;
                             sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
                             sujeto_actual.m_tiempo_estado_salud_6_11 = 0;
                             sujeto_actual.m_estado_salud_HR = SUSCEPTIBLE_16_18;
-                            sujeto_actual.m_estado_salud_6_11 = SUSCEPTIBLE_6_11;
+                            sujeto_actual.m_estado_salud_LR = SUSCEPTIBLE_6_11;
                             sujeto_actual.m_vacunado = false;
                             sujeto_actual.m_verrugable = false;
                             sujeto_actual.m_oncogenico = false;
@@ -2968,7 +3022,7 @@ int cuentaDinamicaHomo = 0;
                             sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
                             sujeto_actual.m_tiempo_estado_salud_6_11 = 0;
                             sujeto_actual.m_estado_salud_HR = SUSCEPTIBLE_16_18;
-                            sujeto_actual.m_estado_salud_6_11 = SUSCEPTIBLE_6_11;
+                            sujeto_actual.m_estado_salud_LR = SUSCEPTIBLE_6_11;
                             sujeto_actual.m_vacunado = false;
                             sujeto_actual.m_verrugable = false;
                             sujeto_actual.m_oncogenico = false;
@@ -3047,7 +3101,7 @@ int cuentaDinamicaHomo = 0;
                             contador_onco++;
 
                     }
-                    if (sujeto_actual.m_estado_salud_6_11 == INFECTADO_6_11)
+                    if (sujeto_actual.m_estado_salud_LR == INFECTADO_6_11)
                     {
                         sujeto_actual.m_verrugable = ( m_dado.TiraFloat() < m_verrugable? true : false );
                         contador_LR++;
@@ -3072,7 +3126,7 @@ int cuentaDinamicaHomo = 0;
                     if (azar < m_cv_ninias * m_pv)
                     {
                         sujeto_actual.m_estado_salud_HR = VACUNADA;
-                        sujeto_actual.m_estado_salud_6_11 = VACUNADA;
+                        sujeto_actual.m_estado_salud_LR = VACUNADA;
                         sujeto_actual.m_vacunado = true; //20160920
                         sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
                         contVacMujeres++;
@@ -3085,7 +3139,7 @@ int cuentaDinamicaHomo = 0;
                     if (azar < m_cv_ninios * m_pv)
                     {
                         sujeto_actual.m_estado_salud_HR = VACUNADA;
-                        sujeto_actual.m_estado_salud_6_11 = VACUNADA;
+                        sujeto_actual.m_estado_salud_LR = VACUNADA;
                         sujeto_actual.m_vacunado = true; //20160920
                         sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
                         contVacHombres++;
@@ -3093,57 +3147,14 @@ int cuentaDinamicaHomo = 0;
                 }
             }
 
-////////////////////////// V A C U N A C I O N  CATCH  UP
-            if (turno == m_mes_catchup_ini)
-            {
 
-                periodo = m_mes_catchup_fin - m_mes_catchup_ini;
-                cob = (1/periodo) * pow(m_cv_catchup,(1/periodo));
-                vacunacion_deshabilitada = true;
-
-            }
-            if (    (sujeto_actual.m_sexo == MUJER) &&
-                        ( (sujeto_actual.m_edad >= m_edad_catchup_ini) && (sujeto_actual.m_edad <= m_edad_catchup_fin)  ) &&
-                        (    (turno >= m_mes_catchup_ini) && (turno <= m_mes_catchup_fin) )      &&
-                        (   not sujeto_actual.m_vacunado    )
-
-                        )
-            {
-                //Vacunas catch up
-                azar = m_dado.TiraFloat();
-                if (azar < cob)
-                {
-                    sujeto_actual.m_estado_salud_HR = VACUNADA;
-                    sujeto_actual.m_estado_salud_6_11 = VACUNADA;
-                    sujeto_actual.m_vacunado = true; //20160920
-                    sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
-                    contVacMujeresCatchtup++;
-                }
-            }
-            if (turno == m_mes_catchup_fin)
-            {
-
-                vacunacion_deshabilitada = false;
-
-            }
 ////////////////////////// P E R D I D A  P R O T E C C I O N
             //Si tiene la Gardasil puesta
-            if ( (sujeto_actual.m_estado_salud_HR == VACUNADA) && (sujeto_actual.m_estado_salud_6_11 == VACUNADA) && (sujeto_actual.m_vacunado) )
+            if ( (sujeto_actual.m_estado_salud_HR == VACUNADA) && (sujeto_actual.m_estado_salud_LR == VACUNADA) && (sujeto_actual.m_vacunado) )
             {
-                azar = m_dado.TiraFloat();
-                //Consideramos solo tiempo en 16_18, TBC Rafa
-                //Tirada de salvacion por vacuna
-                BASE_TYPE salvacion = PerdidaProteccion (sujeto_actual.m_tiempo_estado_salud_16_18);
-                if (azar > salvacion) //Si falla la tirada
-                {
-//                        cout << "perdida de protección" << endl;
-//                        sleep(1);
-                        sujeto_actual.m_estado_salud_HR             = SUSCEPTIBLE_16_18;
-                        sujeto_actual.m_tiempo_estado_salud_16_18   = 0;
-                        sujeto_actual.m_estado_salud_6_11           = SUSCEPTIBLE_6_11;
-                        sujeto_actual.m_tiempo_estado_salud_6_11    = 0;
-                        sujeto_actual.m_vacunado                    = false;
-                }
+                //20170529
+                //Bug en PerdidaProteccion
+                sujeto_actual.m_tiempo_estado_salud_16_18++;
             }//FIN VACUNADA
 
 ////////////////////////// S U S C E P T I B L E
@@ -3184,14 +3195,14 @@ int cuentaDinamicaHomo = 0;
             }//FIN SUSCEPTIBLE 16 18
 
             //Si el sujeto es susceptible vemos que ocurre con sus vecinos - 6_11 Verruga genital anal
-            if (sujeto_actual.m_estado_salud_6_11 == SUSCEPTIBLE_6_11)
+            if (sujeto_actual.m_estado_salud_LR == SUSCEPTIBLE_6_11)
             {
                 vecinas = m_grafo.CuantosVecinos(persona);
                 //Recorremos las aristas vecinas
                 for (unsigned int i = 0; i < vecinas ; i++)
                 {
                     //Si un vecino esta infectado
-                    if (m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_estado_salud_6_11 == INFECTADO_6_11)
+                    if (m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_estado_salud_LR == INFECTADO_6_11)
                     {
                         azar = m_dado.TiraFloat();
                         // Si es hombre comprobamos si se infecta de una pareja mujer
@@ -3200,7 +3211,7 @@ int cuentaDinamicaHomo = 0;
                             if (azar < m_probabilidad_de_contagio_M_6_11 * calcula_T_Asociado(sujeto_actual)) //De mujer a hombre
                             {
                                 //tiene VPH cuando actualice el mundo
-                                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11_NEW;
+                                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11_NEW;
                                 //feature
                                 sujeto_actual.m_verrugable = m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_verrugable;
                             }
@@ -3211,7 +3222,7 @@ int cuentaDinamicaHomo = 0;
                             if (azar < m_probabilidad_de_contagio_H_6_11 * calcula_T_Asociado(sujeto_actual)) //De hombre a mujer
                             {
                                 //tiene VPH cuando actualice el mundo
-                                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11_NEW;
+                                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11_NEW;
                                 sujeto_actual.m_verrugable = m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_verrugable;
                             }
                         }
@@ -3238,7 +3249,8 @@ int cuentaDinamicaHomo = 0;
                         {
                             if (azar < m_probabilidad_de_contagio_M_16_18 *
                                         calcula_T_Asociado(sujeto_actual) *
-                                        m_proteccion_de_vacuna_HR) //De mujer a hombre
+                                        m_proteccion_de_vacuna_HR *
+                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18)))//De mujer a hombre
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18_NEW;
@@ -3251,7 +3263,8 @@ int cuentaDinamicaHomo = 0;
                         {
                             if (azar < m_probabilidad_de_contagio_H_16_18 *
                                         calcula_T_Asociado(sujeto_actual) *
-                                        m_proteccion_de_vacuna_HR) //De hombre a mujer
+                                        m_proteccion_de_vacuna_HR *
+                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18))) //De hombre a mujer
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18_NEW;
@@ -3264,14 +3277,14 @@ int cuentaDinamicaHomo = 0;
             }
 
             //Si el sujeto es vacunado de LR
-            if (sujeto_actual.m_estado_salud_6_11 == VACUNADA)
+            if (sujeto_actual.m_estado_salud_LR == VACUNADA)
             {
                 vecinas = m_grafo.CuantosVecinos(persona);
                 //Recorremos las aristas vecinas
                 for (unsigned int i = 0; i < vecinas ; i++)
                 {
                     //Si un vecino esta infectado
-                    if (m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_estado_salud_6_11 == INFECTADO_6_11)
+                    if (m_grafo.Nodo(m_grafo.Vecino(persona, i)).m_estado_salud_LR == INFECTADO_6_11)
                     {
                         azar = m_dado.TiraFloat();
                         // Si es hombre comprobamos si se infecta de una pareja mujer
@@ -3279,10 +3292,11 @@ int cuentaDinamicaHomo = 0;
                         {
                             if (azar < m_probabilidad_de_contagio_M_6_11 *
                                         calcula_T_Asociado(sujeto_actual) *
-                                        m_proteccion_de_vacuna_LR) //De mujer a hombre
+                                        m_proteccion_de_vacuna_LR *
+                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18))) //De mujer a hombre
                             {
                                 //tiene VPH cuando actualice el mundo
-                                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11_NEW;
+                                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11_NEW;
                                 //no hago verrugable
                             }
                         }
@@ -3291,10 +3305,11 @@ int cuentaDinamicaHomo = 0;
                         {
                             if (azar < m_probabilidad_de_contagio_H_6_11 *
                                         calcula_T_Asociado(sujeto_actual)  *
-                                        m_proteccion_de_vacuna_LR) //De hombre a mujer
+                                        m_proteccion_de_vacuna_LR *
+                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18))) //De hombre a mujer
                             {
                                 //tiene VPH cuando actualice el mundo
-                                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11_NEW;
+                                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11_NEW;
                                 //no hago verrugable
                             }
                         }
@@ -3318,14 +3333,14 @@ int cuentaDinamicaHomo = 0;
                 }
             }
             //Si el sujeto esta infectado vemos si deja de estarlo
-            if (sujeto_actual.m_estado_salud_6_11 == INFECTADO_6_11)
+            if (sujeto_actual.m_estado_salud_LR == INFECTADO_6_11)
             {
                 //Incremento su contador en ese estado de salud
                 sujeto_actual.m_tiempo_estado_salud_6_11++;
                 if (seRecupera(sujeto_actual, false))//LR->false
                 {
                     //pasa a ser susceptible
-                    sujeto_actual.m_estado_salud_6_11 = RECUPERADO_6_11;
+                    sujeto_actual.m_estado_salud_LR = RECUPERADO_6_11;
                     sujeto_actual.m_tiempo_estado_salud_6_11 = 0;
                     sujeto_actual.m_verrugable = false;
                 }
@@ -3344,9 +3359,9 @@ int cuentaDinamicaHomo = 0;
                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
                 sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
             }
-			if (sujeto_actual.m_estado_salud_6_11 == INFECTADO_6_11_NEW)
+			if (sujeto_actual.m_estado_salud_LR == INFECTADO_6_11_NEW)
             {
-                sujeto_actual.m_estado_salud_6_11 = INFECTADO_6_11;
+                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = 0;
             }
         }//Fin actualiza mundo
@@ -3396,9 +3411,9 @@ int cuentaDinamicaHomo = 0;
                 sujeto_actual.m_estado_salud_HR = SUSCEPTIBLE_16_18;
                 sujeto_actual.m_tiempo_estado_salud_16_18 = 0;
             }
-            if (sujeto_actual.m_estado_salud_6_11 == RECUPERADO_6_11)
+            if (sujeto_actual.m_estado_salud_LR == RECUPERADO_6_11)
             {
-                sujeto_actual.m_estado_salud_6_11 = SUSCEPTIBLE_6_11;
+                sujeto_actual.m_estado_salud_LR = SUSCEPTIBLE_6_11;
                 sujeto_actual.m_tiempo_estado_salud_6_11 = 0;
             }
         }//Fin actualiza mundo
@@ -3433,7 +3448,7 @@ int cuentaDinamicaHomo = 0;
     }//for all turnos
 
     cout << "Simulation elapsed time               :" << m_reloj.segundos_transcurridos() << "(s)" << endl;
-    cout << contVacMujeresCatchtup << endl;
+    cout << "contVacMujeresCatchtup: " << contVacMujeresCatchtup << endl;
 //    cout << endl;
 //    if (m_dinamica)
 //    {
@@ -3514,8 +3529,9 @@ BASE_TYPE CProblema::asigna_T(unsigned int edad)
 }
 
 
-//La función lineal de pérdida de protección será f(x) = [ ( - pp ) / tp ] x + 1.
+//La funciÃ³n lineal de pÃ©rdida de protecciÃ³n serÃ¡ f(x) = [ ( - pp ) / tp - tini] x + 1.
+//Ver PDF Perdida_de_proteccion_Mayo2017.pdf
 BASE_TYPE CProblema::PerdidaProteccion(unsigned t)
 {
-    return  ((( - m_pp ) / m_tp ) * t ) + (BASE_TYPE) 1.0;
+    return  ((( - m_pp ) / (m_tp - m_tini) ) * t ) + (BASE_TYPE) 1.0;
 }

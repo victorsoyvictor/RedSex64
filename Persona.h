@@ -60,7 +60,7 @@ public:
 	unsigned int                m_relaciones_pendientes;
 	unsigned int                m_LSP;
 	ESTADO_SALUD_TIPO           m_estado_salud_HR;
-	ESTADO_SALUD_TIPO           m_estado_salud_6_11;
+	ESTADO_SALUD_TIPO           m_estado_salud_LR;
 	unsigned short              m_tiempo_estado_salud_16_18;
 	unsigned short              m_tiempo_estado_salud_6_11;
 	bool                        m_homosexual;
