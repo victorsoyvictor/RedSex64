@@ -224,6 +224,7 @@ public:
 	BASE_TYPE PesoEdades(int edadH, int edadM);
     bool seRecupera(CPersona p1, bool HR);
     bool asignaMujer2Homo(unsigned int p_tot_hombres, unsigned int id_nodo_homo);
+    bool existe500Error();
 };
 
 

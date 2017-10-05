@@ -2313,6 +2313,17 @@ bool CProblema::GuardaEstadoInicialRedParaGrafoWeb(bool valida)
 }
 
 /**
+*
+*/
+bool CProblema::existe500Error()
+{
+    CArchivoTexto salida;
+    if (salida.AbreArchivoEscritura(m_identificador_de_prueba + "_500.error") == false)
+        return false;
+}
+
+
+/**
  * It saves the .sol file
  *
  * @param valida tells is ERROR generated
@@ -2326,86 +2337,87 @@ bool CProblema::GuardaSimulacion(bool valida)
 	unsigned int edad;
     CCRC32 crc;
 
-    if (salida.AbreArchivoEscritura(m_solucion_de_salida) == false)
-        return false;
+    string err500 = m_solucion_de_salida;
 
     if (valida == false)
     {
-        cadena = "ERROR";
+       err500 = m_identificador_de_prueba + "_500.sol";
     }
-    else
-    {
-		cadena = " (* RAM, generador de red, turnos, realizaciones, nodos, grado medio M LSP, pesos P , T desplazado, T0, T1, T2, T3 *)\n";
-        cadena += "problema={";
-        cadena += m_identificador_de_prueba + ",";
-        cadena += entero_a_texto(m_consumo_RAM)+",";
-        cadena += TipoBase_a_texto(m_generador_de_red)+",";
-        cadena += entero_a_texto(m_turnos_a_simular)+",";
-        cadena += entero_a_texto(m_realizaciones)+",";
-        cadena += entero_a_texto(m_numero_de_nodos)+",";
-        cadena += TipoBase_a_texto(m_grado_medio)+",";
-        cadena += entero_a_texto(m_pesos)+",";
-        cadena += entero_a_texto(m_T_desplazado)+",";
-        cadena += TipoBase_a_texto(m_T0)+",";
-        cadena += TipoBase_a_texto(m_T1)+",";
-        cadena += TipoBase_a_texto(m_T2)+",";
-        cadena += TipoBase_a_texto(m_T3);
-		cadena += "};\n";
-        cadena += "(* {{turno,{edad, poblacion_por_edad_H, poblacion_por_edad_M, poblacion_por_edad_Homo, infectados_por_edad_HR_H, infectados_por_edad_HR_M ,infectados_por_edad_HR_H_HOMO, infectados_por_edad_LR_H, infectados_por_edad_LR_M, infectados_por_edad_LR_H_HOMO, infectados_por_edad_HR_LR_H, infectados_por_edad_HR_LR_M, infectados_por_edad_HR_LR_H_HOMO, vacunados_hombres_por_edad, vacunados_mujeres_por_edad, vacunados_homo_por_edad, infectados_vacunados_por_edad_HR_H, infectados_vacunados_por_edad_HR_M, infectados_vacunados_por_edad_HR_H_HOMO, infectados_vacunados_por_edad_LR_H, infectados_vacunados_por_edad_LR_M, infectados_vacunados_por_edad_LR_H_HOMO, infectados_vacunados_por_edad_HR_LR_H, infectados_vacunados_por_edad_HR_LR_M, infectados_vacunados_por_edad_HR_LR_H_HOMO}}}, auxililares, CRC...*)\n";
-        cadena += " solucion={ ";
 
-        for (turno = 0; turno < m_contabilidad.size() ; turno++)  //1-600
+    if (salida.AbreArchivoEscritura(err500) == false)
+        return false;
+
+    cadena = " (* RAM, generador de red, turnos, realizaciones, nodos, grado medio M LSP, pesos P , T desplazado, T0, T1, T2, T3 *)\n";
+    cadena += "problema={";
+    cadena += m_identificador_de_prueba +",";
+    cadena += entero_a_texto(m_consumo_RAM)+",";
+    cadena += TipoBase_a_texto(m_generador_de_red)+",";
+    cadena += entero_a_texto(m_turnos_a_simular)+",";
+    cadena += entero_a_texto(m_realizaciones)+",";
+    cadena += entero_a_texto(m_numero_de_nodos)+",";
+    cadena += TipoBase_a_texto(m_grado_medio)+",";
+    cadena += entero_a_texto(m_pesos)+",";
+    cadena += entero_a_texto(m_T_desplazado)+",";
+    cadena += TipoBase_a_texto(m_T0)+",";
+    cadena += TipoBase_a_texto(m_T1)+",";
+    cadena += TipoBase_a_texto(m_T2)+",";
+    cadena += TipoBase_a_texto(m_T3);
+    cadena += "};\n";
+    cadena += "(* {{turno,{edad, poblacion_por_edad_H, poblacion_por_edad_M, poblacion_por_edad_Homo, infectados_por_edad_HR_H, infectados_por_edad_HR_M ,infectados_por_edad_HR_H_HOMO, infectados_por_edad_LR_H, infectados_por_edad_LR_M, infectados_por_edad_LR_H_HOMO, infectados_por_edad_HR_LR_H, infectados_por_edad_HR_LR_M, infectados_por_edad_HR_LR_H_HOMO, vacunados_hombres_por_edad, vacunados_mujeres_por_edad, vacunados_homo_por_edad, infectados_vacunados_por_edad_HR_H, infectados_vacunados_por_edad_HR_M, infectados_vacunados_por_edad_HR_H_HOMO, infectados_vacunados_por_edad_LR_H, infectados_vacunados_por_edad_LR_M, infectados_vacunados_por_edad_LR_H_HOMO, infectados_vacunados_por_edad_HR_LR_H, infectados_vacunados_por_edad_HR_LR_M, infectados_vacunados_por_edad_HR_LR_H_HOMO}}}, auxililares, CRC...*)\n";
+    cadena += " solucion={ ";
+
+    for (turno = 0; turno < m_contabilidad.size() ; turno++)  //1-600
+    {
+        cadena += "{";
+        cadena += entero_a_texto(turno)+",{";
+        for (edad = 14; edad <= 65; edad++)
         {
             cadena += "{";
-            cadena += entero_a_texto(turno)+",{";
-			for (edad = 14; edad <= 65; edad++)
-			{
-				cadena += "{";
-		/*1*/	cadena += entero_a_texto(edad)+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_HOMO[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_H[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_M[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_H_HOMO[edad-14])+",";//NEW
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_LR_H[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_LR_M[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_LR_H_HOMO[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_LR_H[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_LR_M[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_LR_H_HOMO[edad-14])+",";
+    /*1*/	cadena += entero_a_texto(edad)+",";
+            cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_HOMO[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_H[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_M[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_H_HOMO[edad-14])+",";//NEW
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_LR_H[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_LR_M[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_LR_H_HOMO[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_LR_H[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_LR_M[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_por_edad_HR_LR_H_HOMO[edad-14])+",";
 /*14*/  		cadena += entero_a_texto(m_contabilidad[turno].vacunados_hombres_por_edad[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].vacunados_mujeres_por_edad[edad-14])+",";
-                cadena += entero_a_texto(m_contabilidad[turno].vacunados_homo_por_edad[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_H[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_M[edad-14])+",";
-                cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_H_HOMO[edad-14])+",";//NEW
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_LR_H[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_LR_M[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_LR_H_HOMO[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_LR_H[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_LR_M[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_LR_H_HOMO[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M_VERRUGABLE[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE_HOMO[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M_ONCOGENICO[edad-14])+",";
-				cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO_HOMO[edad-14])+"}";
-				if (edad <= 65 - 1)
-					cadena += ",";
-			}
-			if (turno < m_contabilidad.size() -1 )
-                cadena += "}},";
-            else
-                cadena +="}";
+            cadena += entero_a_texto(m_contabilidad[turno].vacunados_mujeres_por_edad[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].vacunados_homo_por_edad[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_H[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_M[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_H_HOMO[edad-14])+",";//NEW
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_LR_H[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_LR_M[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_LR_H_HOMO[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_LR_H[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_LR_M[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].infectados_vacunados_por_edad_HR_LR_H_HOMO[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M_VERRUGABLE[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_VERRUGABLE_HOMO[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_M_ONCOGENICO[edad-14])+",";
+            cadena += entero_a_texto(m_contabilidad[turno].poblacion_por_edad_H_ONCOGENICO_HOMO[edad-14])+"}";
+            if (edad <= 65 - 1)
+                cadena += ",";
         }
-        cadena += "}};";
-        cadena += "auxiliares={";
-        cadena += entero_a_texto((unsigned int)m_reloj.segundos_transcurridos());
-        cadena += "};";
-        crc.InsertaCRCASCII(cadena);
+        if (turno < m_contabilidad.size() -1 )
+            cadena += "}},";
+        else
+            cadena +="}";
     }
+    cadena += "}};";
+    cadena += "auxiliares={";
+    cadena += entero_a_texto((unsigned int)m_reloj.segundos_transcurridos());
+    cadena += "};";
+    crc.InsertaCRCASCII(cadena);
+
 
     if (salida.GuardaTexto(cadena) == false)
         return false;
@@ -2828,11 +2840,25 @@ void CProblema::SimulaPoblacion()
 
 int cuentaDinamicaHetero = 0;
 int cuentaDinamicaHomo = 0;
-
+//error 500
+CArchivoTexto salida;
     //Para cada turno
     for (turno = 1; turno <= m_turnos_a_simular ; turno++)
     {
-        //20170410
+        //20170925 CORTE 500
+        if (turno == 500)
+        {
+            GuardaSimulacion(false);
+        }
+        //20170925 CORTE 500
+        if (turno == 550)
+        {
+            if (salida.AbreArchivoLectura(m_identificador_de_prueba + "_500.error") == true)
+            exit(-1);
+        }
+
+
+        //20170410 AUSTRALIA CATCHUP
         if (turno == m_mes_catchup_ini)
         {
 
@@ -2885,10 +2911,10 @@ int cuentaDinamicaHomo = 0;
         // start timer for turn
 //        QueryPerformanceCounter(&t1);
         //Para cada nodo
+        //PARACADAPERSONA
         for (persona = 0; persona < m_grafo.m_numnodos; persona++)
         {
             CPersona &sujeto_actual = m_grafo.Nodo(persona);
-
             //si es el mes de su cumpleanios y es dinamica empieza
             if ((turno >=  m_dinamica_ini) && (turno <= m_dinamica_fin))
             {
@@ -3154,6 +3180,10 @@ int cuentaDinamicaHomo = 0;
             {
                 //20170529
                 //Bug en PerdidaProteccion
+                if ((PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18)) == (PerdidaProteccion(1)) )
+                {
+                    cout << entero_a_texto(sujeto_actual.m_id) << "->Pierde proteccion: "<< entero_a_texto(sujeto_actual.m_tiempo_estado_salud_16_18)<<"\n";
+                }
                 sujeto_actual.m_tiempo_estado_salud_16_18++;
             }//FIN VACUNADA
 
@@ -3268,6 +3298,8 @@ int cuentaDinamicaHomo = 0;
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18_NEW;
+
+
                                 //no hago oncogenico
                             }
                         }
