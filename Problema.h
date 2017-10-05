@@ -164,6 +164,8 @@ public:
     unsigned int m_mes_catchup_fin;
     unsigned int m_edad_catchup_ini;
     unsigned int m_edad_catchup_fin;
+    unsigned int m_ei;
+    unsigned int m_ef;
     BASE_TYPE m_pv;
     BASE_TYPE m_cv_ninias;
     BASE_TYPE m_cv_ninios;
@@ -173,6 +175,7 @@ public:
     BASE_TYPE m_tini;
     BASE_TYPE m_alpha_1;
     BASE_TYPE m_alpha_2;
+    BASE_TYPE m_por;
 
 
     //Variables globales

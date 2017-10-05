@@ -982,6 +982,21 @@ bool CProblema::LeeProblema(string problema_de_entrada,string solucion_de_salida
 
         archivo.LeeLinea(buffer);
         archivo.LeeLinea(buffer);
+        m_ei = texto_a_entero(buffer);
+
+
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
+        m_ef = texto_a_entero(buffer);
+
+
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
+        m_por = texto_a_TipoBase(buffer);
+
+
+        archivo.LeeLinea(buffer);
+        archivo.LeeLinea(buffer);
         m_alpha_2 = texto_a_TipoBase(buffer);
 
 
@@ -2531,6 +2546,7 @@ void CProblema::SimulaPoblacion()
     BASE_TYPE gvac                  = 0.0;
     BASE_TYPE vacXturno             = 0.0;
     bool vacunacion_deshabilitada   = false;
+    bool hay_vacunacion             = false;
     unsigned int edad = 0;
 
 	cout << "IN : " << m_problema_de_entrada << endl;
@@ -3110,7 +3126,7 @@ CArchivoTexto salida;
 ////////////////////////// V E R R U G A B L E  O N C O G E N I C O (antes de vacunar -> turno = m_mes_vacunacion_ini)
             if ((turno == m_mes_vacunacion_ini) && (! realizadoVerrugableOncogenico))
             {
-                cout <<"nueva feature on"<< endl;
+                cout <<"nueva verrugable oncogenico on"<< endl;
                 realizadoVerrugableOncogenico = true;
                 unsigned int contador_LR = 0;
                 unsigned int contador_HR = 0;
@@ -3143,6 +3159,7 @@ CArchivoTexto salida;
 
             if ((turno >= m_mes_vacunacion_ini) && (turno <= m_mes_vacunacion_fin) && not vacunacion_deshabilitada)
             {
+                hay_vacunacion = true;
                 //si es el mes de su cumpleanios y tiene 14 anios y es chica -> contador 168 (14*12)
                 // m_mes_nacimiento va de 0-11
                 if ((sujeto_actual.m_sexo == MUJER) && (sujeto_actual.m_edad_meses == 168))
@@ -3377,6 +3394,61 @@ CArchivoTexto salida;
                     sujeto_actual.m_verrugable = false;
                 }
             }
+
+
+            //TURISMO
+            //            Para todo nodo con edad entre ei y ef y con 4 LSP o más: Si rnd() < por (hay infección nueva)
+            //Si rnd() < 0.7603 (infectado solo de HR) Marcar INFECTADO_HR = True Si rnd() < 0.5035
+            //Marcar ONCOGENICO = True
+            //Si 0.7603 <= rnd() < 0.7603 + 0.1172 (infectado solo de LR) Marcar INFECTADO_LR = True
+            //Si rnd() < 0.3707
+            //Marcar VERRUGABLE = True
+            //Si 0.7603 + 0.1172 <= rnd() (infectado de ambos)
+            //Marcar INFECTADO_HR = True y INFECTADO_LR = True Si rnd() < 0.5035
+            //Marcar ONCOGENICO = True Si rnd() < 0.3707
+            //Marcar VERRUGABLE = True
+            if ((turno >= m_mes_vacunacion_ini) && (turno <= m_mes_vacunacion_fin))
+            {
+                cout << "Feature turismo ON" << endl;
+                //Para cada nodo
+                for (persona = 0; persona < m_grafo.m_numnodos; persona++)
+                {
+                    CPersona &sujeto_actual = m_grafo.Nodo(persona);
+
+                    //si es el mes de su cumpleanios y es dinamica empieza
+                    if ((sujeto_actual.m_edad >=  m_ei) && (sujeto_actual.m_edad <= m_ef) && (sujeto_actual.m_LSP >= 4))
+                    {
+                        if(m_dado.TiraFloat() < m_por)
+                        {
+                            azar = m_dado.TiraFloat();
+                            if (azar < 0.7603)
+                            {
+                                sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
+                                sujeto_actual.m_oncogenico = ( m_dado.TiraFloat() < 0.5035? true : false );
+                            }
+                            azar = m_dado.TiraFloat();
+                            if ((0.7603 <= azar) && (azar < 0.7603 + 0.1172))
+                            {
+                                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
+                                sujeto_actual.m_verrugable = ( m_dado.TiraFloat() < 0.3707? true : false );
+                            }
+                            azar = m_dado.TiraFloat();
+                            if (azar < 0.7603 + 0.1172)
+                            {
+                                sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
+                                sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
+                                sujeto_actual.m_oncogenico = ( m_dado.TiraFloat() < 0.5035? true : false );
+                                sujeto_actual.m_verrugable = ( m_dado.TiraFloat() < 0.3707? true : false );
+                            }
+                        }
+
+                    }
+                }
+
+
+            }
+
+
         }//for all persona
         // FIN de iteracion por la red para cada individuo, ahora actualizo el mundo
         //Esto se hace para que no haya infectados aumentado todo el tiempo y perdujique
