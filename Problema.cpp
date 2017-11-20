@@ -3195,13 +3195,15 @@ CArchivoTexto salida;
             //Si tiene la Gardasil puesta
             if ( (sujeto_actual.m_estado_salud_HR == VACUNADA) && (sujeto_actual.m_estado_salud_LR == VACUNADA) && (sujeto_actual.m_vacunado) )
             {
-                //20170529
-                //Bug en PerdidaProteccion
-                if ((PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18)) == (PerdidaProteccion(1)) )
-                {
-                    cout << entero_a_texto(sujeto_actual.m_id) << "->Pierde proteccion: "<< entero_a_texto(sujeto_actual.m_tiempo_estado_salud_16_18)<<"\n";
-                }
+                //Validado 20171006 en PerdidaProteccion
                 sujeto_actual.m_tiempo_estado_salud_16_18++;
+//                cout << entero_a_texto(sujeto_actual.m_id) << "->Pierde proteccion: "<< entero_a_texto(sujeto_actual.m_tiempo_estado_salud_16_18)<<"\n";
+//                cout << "\t" << sujeto_actual.m_edad << " " <<sujeto_actual.m_tiempo_estado_salud_16_18 << " " <<
+//                    turno <<" ";//<< TipoBase_a_texto(PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18  - m_tini)) << endl;
+//                BASE_TYPE aux = (PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18 - m_tini ));
+//                cout << TipoBase_a_texto(aux) << endl;
+
+
             }//FIN VACUNADA
 
 ////////////////////////// S U S C E P T I B L E
@@ -3297,7 +3299,7 @@ CArchivoTexto salida;
                             if (azar < m_probabilidad_de_contagio_M_16_18 *
                                         calcula_T_Asociado(sujeto_actual) *
                                         m_proteccion_de_vacuna_HR *
-                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18)))//De mujer a hombre
+                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18 - m_tini)))//De mujer a hombre
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18_NEW;
@@ -3311,7 +3313,7 @@ CArchivoTexto salida;
                             if (azar < m_probabilidad_de_contagio_H_16_18 *
                                         calcula_T_Asociado(sujeto_actual) *
                                         m_proteccion_de_vacuna_HR *
-                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18))) //De hombre a mujer
+                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18 - m_tini))) //De hombre a mujer
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18_NEW;
@@ -3342,7 +3344,7 @@ CArchivoTexto salida;
                             if (azar < m_probabilidad_de_contagio_M_6_11 *
                                         calcula_T_Asociado(sujeto_actual) *
                                         m_proteccion_de_vacuna_LR *
-                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18))) //De mujer a hombre
+                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18 - m_tini))) //De mujer a hombre
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_LR = INFECTADO_6_11_NEW;
@@ -3355,7 +3357,7 @@ CArchivoTexto salida;
                             if (azar < m_probabilidad_de_contagio_H_6_11 *
                                         calcula_T_Asociado(sujeto_actual)  *
                                         m_proteccion_de_vacuna_LR *
-                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18))) //De hombre a mujer
+                                        (1 - PerdidaProteccion(sujeto_actual.m_tiempo_estado_salud_16_18 - m_tini))) //De hombre a mujer
                             {
                                 //tiene VPH cuando actualice el mundo
                                 sujeto_actual.m_estado_salud_LR = INFECTADO_6_11_NEW;
@@ -3409,7 +3411,7 @@ CArchivoTexto salida;
             //Marcar VERRUGABLE = True
             if ((turno >= m_mes_vacunacion_ini) && (turno <= m_mes_vacunacion_fin))
             {
-                cout << "Feature turismo ON" << endl;
+                //cout << "Feature turismo ON" << endl;
                 //Para cada nodo
                 for (persona = 0; persona < m_grafo.m_numnodos; persona++)
                 {
@@ -3420,25 +3422,36 @@ CArchivoTexto salida;
                     {
                         if(m_dado.TiraFloat() < m_por)
                         {
+
                             azar = m_dado.TiraFloat();
                             if (azar < 0.7603)
                             {
                                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
-                                sujeto_actual.m_oncogenico = ( m_dado.TiraFloat() < 0.5035? true : false );
+                                if (!sujeto_actual.m_vacunado)
+                                    sujeto_actual.m_oncogenico = ( m_dado.TiraFloat() < 0.5035? true : false );
+
                             }
-                            azar = m_dado.TiraFloat();
                             if ((0.7603 <= azar) && (azar < 0.7603 + 0.1172))
                             {
                                 sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
-                                sujeto_actual.m_verrugable = ( m_dado.TiraFloat() < 0.3707? true : false );
+
+                                if (!sujeto_actual.m_vacunado)
+                                    sujeto_actual.m_verrugable = ( m_dado.TiraFloat() < 0.3707? true : false );
+
                             }
-                            azar = m_dado.TiraFloat();
-                            if (azar < 0.7603 + 0.1172)
+                            if (azar > 0.7603 + 0.1172)
                             {
+                                //cout << sujeto_actual.m_id << " Infectado INFECTADO_16_18 INFECTADO_6_11" << endl;
                                 sujeto_actual.m_estado_salud_HR = INFECTADO_16_18;
                                 sujeto_actual.m_estado_salud_LR = INFECTADO_6_11;
-                                sujeto_actual.m_oncogenico = ( m_dado.TiraFloat() < 0.5035? true : false );
-                                sujeto_actual.m_verrugable = ( m_dado.TiraFloat() < 0.3707? true : false );
+                                if (!sujeto_actual.m_vacunado)
+                                {
+                                    sujeto_actual.m_oncogenico = ( m_dado.TiraFloat() < 0.5035? true : false );
+
+                                    sujeto_actual.m_verrugable = ( m_dado.TiraFloat() < 0.3707? true : false );
+
+                                }
+
                             }
                         }
 
@@ -3635,7 +3648,12 @@ BASE_TYPE CProblema::asigna_T(unsigned int edad)
 
 //La función lineal de pérdida de protección será f(x) = [ ( - pp ) / tp - tini] x + 1.
 //Ver PDF Perdida_de_proteccion_Mayo2017.pdf
-BASE_TYPE CProblema::PerdidaProteccion(unsigned t)
+BASE_TYPE CProblema::PerdidaProteccion(int t)
 {
-    return  ((( - m_pp ) / (m_tp - m_tini) ) * t ) + (BASE_TYPE) 1.0;
+    BASE_TYPE res = 0.0;
+    if (t < 0)
+        res = 0;
+    else
+        res = ((( - m_pp ) / (m_tp - m_tini) ) * t ) + (BASE_TYPE) 1.0;
+    return res;
 }

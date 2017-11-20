@@ -209,7 +209,7 @@ public:
     unsigned int CuentaPersonas(EVENTO_CONTABLE tipo, unsigned int edad);
 	BASE_TYPE calcula_T_Asociado(CPersona &sujeto_actual);
 	BASE_TYPE asigna_T(unsigned int edad);
-	BASE_TYPE PerdidaProteccion(unsigned int t);
+	BASE_TYPE PerdidaProteccion( int t);
     vector <REGISTRO_CONTABLE_TYPE> m_contabilidad;
 	bool EsHombre();
 	int GrupoEdadHombres();
